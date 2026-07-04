@@ -4,7 +4,7 @@ import { UserHelper, Permissions, Locale, ApiHelper, Loading, PageHeader } from 
 import { useNavigate, useLocation } from "react-router-dom";
 import { PermissionDenied } from "../components";
 import { Box, Button, Grid, Stack, Typography } from "@mui/material";
-import { PlayArrow as PlayArrowIcon, History as HistoryIcon, Business as BusinessIcon, Tune as TuneIcon, VolunteerActivism as VolunteerActivismIcon, Sms as SmsIcon, Language as LanguageIcon, Link as LinkIcon, Code as CodeIcon, School as SchoolIcon, HowToReg as HowToRegIcon, ListAlt as ListAltIcon } from "@mui/icons-material";
+import { PlayArrow as PlayArrowIcon, History as HistoryIcon, Layers as LayersIcon, Business as BusinessIcon, Tune as TuneIcon, VolunteerActivism as VolunteerActivismIcon, Sms as SmsIcon, Language as LanguageIcon, Link as LinkIcon, Code as CodeIcon, School as SchoolIcon, HowToReg as HowToRegIcon, ListAlt as ListAltIcon } from "@mui/icons-material";
 import { useQuery } from "@tanstack/react-query";
 import { SettingsConfigList, type ConfigSection } from "./components/SettingsConfigList";
 import { ChurchInfoSection } from "./components/ChurchInfoSection";
@@ -226,9 +226,14 @@ export const ManageChurch = () => {
     <>
       <PageHeader title={church.data.name || Locale.label("settings.manageChurch.title")} subtitle={church.data.subDomain ? `${church.data.subDomain}.b1.church` : Locale.label("settings.manageChurch.subtitle")}>
         <Stack direction="row" spacing={1}>
-          {UserHelper.checkAccess(Permissions.membershipApi.server.admin) && (
+          {UserHelper.checkAccess(Permissions.membershipApi.settings.edit) && (
             <Button variant="outlined" startIcon={<HistoryIcon />} onClick={() => navigate("/settings/audit-log")} sx={headerButtonSx}>
               {Locale.label("settings.manageChurch.auditLog")}
+            </Button>
+          )}
+          {UserHelper.checkAccess(Permissions.membershipApi.settings.edit) && (
+            <Button variant="outlined" startIcon={<LayersIcon />} onClick={() => navigate("/settings/batches")} sx={headerButtonSx}>
+              {Locale.label("settings.manageChurch.batches")}
             </Button>
           )}
           <Button variant="outlined" startIcon={<PlayArrowIcon />} href={`https://transfer.b1.church/login?jwt=${jwt}&churchId=${churchId}`} target="_blank" rel="noreferrer noopener" sx={headerButtonSx}>

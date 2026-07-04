@@ -4,6 +4,7 @@ import { ManageChurch } from "./ManageChurch";
 import { RolesPage } from "./RolesPage";
 import { RolePage } from "./RolePage";
 import { AuditLogPage } from "./AuditLogPage";
+import { BatchesPage } from "./BatchesPage";
 import { CampusesPage } from "./CampusesPage";
 import { CustomFieldsPage } from "./CustomFieldsPage";
 
@@ -12,6 +13,7 @@ export const Settings: React.FC = () => (
     <Route path="/roles" element={<RolesPage />} />
     <Route path="/role/:roleId" element={<RolePage />} />
     <Route path="/audit-log" element={<AuditLogPage />} />
+    <Route path="/batches" element={<BatchesPage />} />
     <Route path="/campuses" element={<CampusesPage />} />
     <Route path="/custom-fields" element={<CustomFieldsPage />} />
     <Route path="/webhooks" element={<Navigate to="/settings#developer" replace />} />
