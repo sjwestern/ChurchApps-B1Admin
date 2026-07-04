@@ -3,9 +3,10 @@ import { type ChurchInterface } from "@churchapps/helpers";
 import { UserHelper, Permissions, Locale, ApiHelper, Loading, PageHeader } from "@churchapps/apphelper";
 import { useNavigate, useLocation } from "react-router-dom";
 import { PermissionDenied } from "../components";
-import { Box, Button, Grid, Stack, Typography } from "@mui/material";
+import { Box, Grid, Stack, Typography } from "@mui/material";
 import { PlayArrow as PlayArrowIcon, History as HistoryIcon, Layers as LayersIcon, Business as BusinessIcon, Tune as TuneIcon, VolunteerActivism as VolunteerActivismIcon, Sms as SmsIcon, Language as LanguageIcon, Link as LinkIcon, Code as CodeIcon, School as SchoolIcon, HowToReg as HowToRegIcon, ListAlt as ListAltIcon } from "@mui/icons-material";
 import { useQuery } from "@tanstack/react-query";
+import { HeaderSecondaryButton } from "../components/ui";
 import { SettingsConfigList, type ConfigSection } from "./components/SettingsConfigList";
 import { ChurchInfoSection } from "./components/ChurchInfoSection";
 import { SettingsToggleSection } from "./components/SettingsToggleSection";
@@ -22,13 +23,6 @@ import { CheckinSettingsEdit } from "./components/CheckinSettingsEdit";
 const SECTION_KEYS = [
   "church-info", "general", "giving", "texting", "domains", "grade-promotion", "check-ins", "campuses", "custom-fields", "developer"
 ];
-
-const headerButtonSx = {
-  color: "#FFF",
-  backgroundColor: "transparent",
-  borderColor: "#FFF",
-  "&:hover": { backgroundColor: "rgba(255,255,255,0.2)", color: "#FFF" }
-};
 
 const SummaryRow: React.FC<{ label: string; value?: string }> = ({ label, value }) => (
   <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2} sx={{ py: 1 }}>
@@ -227,18 +221,18 @@ export const ManageChurch = () => {
       <PageHeader title={church.data.name || Locale.label("settings.manageChurch.title")} subtitle={church.data.subDomain ? `${church.data.subDomain}.b1.church` : Locale.label("settings.manageChurch.subtitle")}>
         <Stack direction="row" spacing={1}>
           {UserHelper.checkAccess(Permissions.membershipApi.settings.edit) && (
-            <Button variant="outlined" startIcon={<HistoryIcon />} onClick={() => navigate("/settings/audit-log")} sx={headerButtonSx}>
+            <HeaderSecondaryButton startIcon={<HistoryIcon />} onClick={() => navigate("/settings/audit-log")}>
               {Locale.label("settings.manageChurch.auditLog")}
-            </Button>
+            </HeaderSecondaryButton>
           )}
           {UserHelper.checkAccess(Permissions.membershipApi.settings.edit) && (
-            <Button variant="outlined" startIcon={<LayersIcon />} onClick={() => navigate("/settings/batches")} sx={headerButtonSx}>
+            <HeaderSecondaryButton startIcon={<LayersIcon />} onClick={() => navigate("/settings/batches")}>
               {Locale.label("settings.manageChurch.batches")}
-            </Button>
+            </HeaderSecondaryButton>
           )}
-          <Button variant="outlined" startIcon={<PlayArrowIcon />} href={`https://transfer.b1.church/login?jwt=${jwt}&churchId=${churchId}`} target="_blank" rel="noreferrer noopener" sx={headerButtonSx}>
+          <HeaderSecondaryButton startIcon={<PlayArrowIcon />} href={`https://transfer.b1.church/login?jwt=${jwt}&churchId=${churchId}`} target="_blank" rel="noreferrer noopener">
             {Locale.label("settings.manageChurch.imEx")}
-          </Button>
+          </HeaderSecondaryButton>
         </Stack>
       </PageHeader>
 

@@ -82,7 +82,7 @@ export const RegistrationDetailDialog: React.FC<Props> = ({ registrationId, type
                 <Table size="small" data-testid="detail-payments">
                   <TableHead>
                     <TableRow>
-                      <TableCell>{Locale.label("registrations.commerce.amount")}</TableCell>
+                      <TableCell align="right">{Locale.label("registrations.commerce.amount")}</TableCell>
                       <TableCell>{Locale.label("registrations.commerce.method")}</TableCell>
                       <TableCell>{Locale.label("registrations.commerce.kind")}</TableCell>
                       <TableCell>{Locale.label("registrations.registrationDetailsPage.date")}</TableCell>
@@ -91,7 +91,7 @@ export const RegistrationDetailDialog: React.FC<Props> = ({ registrationId, type
                   <TableBody>
                     {(reg?.payments || []).map((p, i) => (
                       <TableRow key={p.id || i}>
-                        <TableCell>{money(p.amount)}</TableCell>
+                        <TableCell align="right">{money(p.amount)}</TableCell>
                         <TableCell>{[p.method, p.provider].filter(Boolean).join(" / ")}</TableCell>
                         <TableCell>{p.kind}</TableCell>
                         <TableCell>{p.createdDate ? new Date(p.createdDate).toLocaleDateString() : ""}</TableCell>

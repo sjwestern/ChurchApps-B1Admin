@@ -4,7 +4,7 @@ import { Locale, Loading, PageHeader } from "@churchapps/apphelper";
 import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowBack as BackIcon } from "@mui/icons-material";
-import { Button } from "@mui/material";
+import { HeaderSecondaryButton } from "../../../components/ui";
 import { type WorkflowStepInterface } from "@churchapps/helpers";
 
 interface ReportData {
@@ -40,7 +40,7 @@ export const WorkflowReportsPage = () => {
   return (
     <>
       <PageHeader title={Locale.label("tasks.workflowReports.title")} subtitle={Locale.label("tasks.workflowReports.subtitle")}>
-        <Button variant="outlined" startIcon={<BackIcon />} onClick={() => navigate("/serving/tasks/workflows/" + workflowId)} sx={{ color: "#FFF", borderColor: "rgba(255,255,255,0.5)" }}>{Locale.label("common.back")}</Button>
+        <HeaderSecondaryButton startIcon={<BackIcon />} onClick={() => navigate("/serving/tasks/workflows/" + workflowId)}>{Locale.label("common.back")}</HeaderSecondaryButton>
       </PageHeader>
       <Box sx={{ p: 3 }} data-testid="workflow-reports">
         <Grid container spacing={3}>

@@ -105,7 +105,7 @@ export const Form: React.FC<Props> = (props) => {
           <TableCell>
             <Typography variant="body2">{questionList[i].fieldType}</Typography>
           </TableCell>
-          <TableCell>
+          <TableCell className="rowActions">
             <Stack direction="row" spacing={0.5} alignItems="center">
               {upArrow}
               {downArrow}
@@ -126,26 +126,10 @@ export const Form: React.FC<Props> = (props) => {
     }
     rows.push(
       <TableRow key="header">
-        <TableCell sx={{ fontWeight: 600 }}>
-          <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
-            {Locale.label("forms.form.question")}
-          </Typography>
-        </TableCell>
-        <TableCell sx={{ fontWeight: 600 }}>
-          <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
-            {Locale.label("forms.form.type")}
-          </Typography>
-        </TableCell>
-        <TableCell sx={{ fontWeight: 600 }}>
-          <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
-            {Locale.label("forms.form.act")}
-          </Typography>
-        </TableCell>
-        <TableCell sx={{ fontWeight: 600 }}>
-          <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
-            {Locale.label("forms.form.req")}
-          </Typography>
-        </TableCell>
+        <TableCell>{Locale.label("forms.form.question")}</TableCell>
+        <TableCell>{Locale.label("forms.form.type")}</TableCell>
+        <TableCell>{Locale.label("forms.form.act")}</TableCell>
+        <TableCell>{Locale.label("forms.form.req")}</TableCell>
       </TableRow>
     );
     return rows;
@@ -164,16 +148,7 @@ export const Form: React.FC<Props> = (props) => {
     if (questions) {
       contents = (
         <Table sx={{ minWidth: 650 }}>
-          <TableHead
-            sx={{
-              backgroundColor: "grey.50",
-              "& .MuiTableCell-root": {
-                borderBottom: "2px solid",
-                borderBottomColor: "divider"
-              }
-            }}>
-            {getTableHeader()}
-          </TableHead>
+          <TableHead>{getTableHeader()}</TableHead>
           <TableBody>{getRows()}</TableBody>
         </Table>
       );

@@ -4,11 +4,11 @@ import { UserHelper, Loading, Locale, PageHeader } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
 import { Permissions } from "@churchapps/apphelper";
 import { type FundInterface } from "@churchapps/helpers";
-import { Chip, Icon, Table, TableBody, TableCell, TableRow, Box, Typography, Card, Stack, Button } from "@mui/material";
+import { Chip, Icon, Table, TableBody, TableCell, TableRow, Box, Typography, Card, Stack } from "@mui/material";
 import { VolunteerActivism as FundIcon, Add as AddIcon, Edit as EditIcon } from "@mui/icons-material";
 import { useQuery } from "@tanstack/react-query";
 import { AppIconButton } from "../components/ui/AppIconButton";
-import { CountChip, EmptyState, ExportButton, SortableTableHead, type SortDirection } from "../components/ui";
+import { CountChip, EmptyState, ExportButton, SortableTableHead, HeaderPrimaryButton, type SortDirection } from "../components/ui";
 
 export const FundsPage = () => {
   const [editFundId, setEditFundId] = React.useState("notset");
@@ -191,23 +191,14 @@ export const FundsPage = () => {
           </Stack>
         )}
         {UserHelper.checkAccess(Permissions.givingApi.donations.edit) && (
-          <Button
-            variant="outlined"
-            sx={{
-              color: "#FFF",
-              borderColor: "rgba(255,255,255,0.5)",
-              "&:hover": {
-                borderColor: "#FFF",
-                backgroundColor: "rgba(255,255,255,0.1)"
-              }
-            }}
+          <HeaderPrimaryButton
             startIcon={<AddIcon />}
             onClick={() => {
               setEditFundId("");
             }}
             data-testid="add-fund-button">
             {Locale.label("donations.fundsPage.addFund")}
-          </Button>
+          </HeaderPrimaryButton>
         )}
       </PageHeader>
 

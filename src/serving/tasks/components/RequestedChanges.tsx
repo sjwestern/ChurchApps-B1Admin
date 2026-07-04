@@ -161,7 +161,7 @@ export const RequestedChanges = (props: Props) => {
             }}>
             <Table>
               <TableHead>
-                <TableRow sx={{ backgroundColor: "grey.50" }}>
+                <TableRow>
                   <TableCell sx={{ fontWeight: 600, color: "text.primary" }}>{Locale.label("tasks.requestedChanges.field")}</TableCell>
                   <TableCell sx={{ fontWeight: 600, color: "text.primary" }}>{Locale.label("tasks.requestedChanges.value")}</TableCell>
                 </TableRow>

@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import { Add as AddIcon } from "@mui/icons-material";
 import { useSearchParams } from "react-router-dom";
 import { UserHelper, Permissions, PageHeader, Locale } from "@churchapps/apphelper";
 import type { LinkInterface } from "@churchapps/helpers";
 import { AppTabs, AppEdit } from "../settings/components";
 import { PermissionDenied } from "../components";
+import { HeaderPrimaryButton } from "../components/ui";
 
 const ICON_FOR_LINK_TYPE: Record<string, string> = {
   bible: "menu_book",
@@ -74,21 +75,9 @@ export const MobileAppSettingsPage = () => {
         title={Locale.label("settings.mobileAppSettings.title")}
         subtitle={Locale.label("settings.mobileAppSettings.subtitle")}
       >
-        <Button
-          variant="outlined"
-          startIcon={<AddIcon />}
-          onClick={handleAddTab}
-          sx={{
-            color: "#FFF",
-            borderColor: "rgba(255,255,255,0.5)",
-            "&:hover": {
-              borderColor: "#FFF",
-              backgroundColor: "rgba(255,255,255,0.1)"
-            }
-          }}
-        >
+        <HeaderPrimaryButton startIcon={<AddIcon />} onClick={handleAddTab}>
           {Locale.label("settings.mobileAppSettings.addTab")}
-        </Button>
+        </HeaderPrimaryButton>
       </PageHeader>
 
       <Box sx={{ p: 3 }}>

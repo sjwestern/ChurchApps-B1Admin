@@ -5,6 +5,7 @@ import { Button, Box, Card, CardContent, Typography, Stack, Avatar, Chip, IconBu
 import { MusicNote as MusicIcon, LibraryMusic as LibraryIcon, Add as AddIcon, Search as SearchIcon, PlayCircle as PlayIcon, Timer as TimerIcon, Person as ArtistIcon, Delete as DeleteIcon } from "@mui/icons-material";
 import { SongSearchDialog } from "./SongSearchDialog";
 import { EmptyState } from "../../components/ui/EmptyState";
+import { HeaderPrimaryButton, HeaderSecondaryButton } from "../../components/ui";
 import { type ArrangementInterface, type ArrangementKeyInterface, type SongDetailInterface, type SongInterface } from "../../helpers";
 import { useQuery } from "@tanstack/react-query";
 
@@ -197,33 +198,22 @@ export const SongsPage = memo(() => {
   return (
     <>
       <PageHeader title={Locale.label("songs.title") || Locale.label("songs.songsPage.songs")} subtitle={Locale.label("songs.songsPage.subtitle")}>
-        <Button
-          variant="outlined"
-          startIcon={<SearchIcon />}
-          onClick={() => setShowSearchField(!showSearchField)}
-          sx={{ color: "#FFF", borderColor: "rgba(255,255,255,0.5)", "&:hover": { borderColor: "#FFF", backgroundColor: "rgba(255,255,255,0.1)" } }}>
+        <HeaderSecondaryButton startIcon={<SearchIcon />} onClick={() => setShowSearchField(!showSearchField)}>
           {Locale.label("songs.songsPage.search")}
-        </Button>
+        </HeaderSecondaryButton>
         {canEdit && selected.size > 0 && (
-          <Button
-            onClick={handleBulkDelete}
-            variant="outlined"
-            startIcon={<DeleteIcon />}
-            data-testid="delete-selected-button"
-            sx={{ color: "#FFF", borderColor: "rgba(255,255,255,0.5)", "&:hover": { borderColor: "#FFF", backgroundColor: "rgba(255,255,255,0.1)" } }}>
+          <HeaderSecondaryButton onClick={handleBulkDelete} startIcon={<DeleteIcon />} data-testid="delete-selected-button">
             {(Locale.label("songs.songsPage.deleteSelected") || "Delete Selected") + " (" + selected.size + ")"}
-          </Button>
+          </HeaderSecondaryButton>
         )}
         {canEdit && (
-          <Button
+          <HeaderPrimaryButton
             onClick={() => setShowSearch(true)}
-            variant="outlined"
             startIcon={<AddIcon />}
             data-testid="add-song-button"
-            aria-label={Locale.label("songs.songsPage.addSongAria")}
-            sx={{ color: "#FFF", borderColor: "rgba(255,255,255,0.5)", "&:hover": { borderColor: "#FFF", backgroundColor: "rgba(255,255,255,0.1)" } }}>
+            aria-label={Locale.label("songs.songsPage.addSongAria")}>
             {Locale.label("songs.addSong") || "Add Song"}
-          </Button>
+          </HeaderPrimaryButton>
         )}
       </PageHeader>
 

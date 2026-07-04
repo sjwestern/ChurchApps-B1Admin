@@ -2,13 +2,13 @@ import React from "react";
 import { CurrencyHelper, DateHelper, Loading, Locale, PageHeader, UserHelper, Permissions } from "@churchapps/apphelper";
 import { type FundInterface } from "@churchapps/helpers";
 import { Link } from "react-router-dom";
-import { Box, Card, LinearProgress, Stack, Table, TableBody, TableCell, TableRow, Typography, Button } from "@mui/material";
+import { Box, Card, LinearProgress, Stack, Table, TableBody, TableCell, TableRow, Typography } from "@mui/material";
 import { Flag as CampaignIcon, Add as AddIcon, Edit as EditIcon } from "@mui/icons-material";
 import { useQuery } from "@tanstack/react-query";
 import { type CampaignInterface, type CampaignProgressInterface } from "../helpers";
 import { CampaignEdit } from "./components";
 import { AppIconButton } from "../components/ui/AppIconButton";
-import { CountChip, EmptyState, SortableTableHead, type SortDirection } from "../components/ui";
+import { CountChip, EmptyState, SortableTableHead, HeaderPrimaryButton, type SortDirection } from "../components/ui";
 
 export const CampaignsPage = () => {
   const [editCampaignId, setEditCampaignId] = React.useState("notset");
@@ -167,14 +167,12 @@ export const CampaignsPage = () => {
           </Stack>
         )}
         {UserHelper.checkAccess(Permissions.givingApi.donations.edit) && (
-          <Button
-            variant="outlined"
-            sx={{ color: "#FFF", borderColor: "rgba(255,255,255,0.5)", "&:hover": { borderColor: "#FFF", backgroundColor: "rgba(255,255,255,0.1)" } }}
+          <HeaderPrimaryButton
             startIcon={<AddIcon />}
             onClick={() => setEditCampaignId("")}
             data-testid="add-campaign-button">
             {Locale.label("donations.campaignsPage.addCampaign")}
-          </Button>
+          </HeaderPrimaryButton>
         )}
       </PageHeader>
 

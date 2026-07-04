@@ -120,10 +120,10 @@ export const GroupCalendarTab = (props: Props) => {
                 { key: "title", label: Locale.label("calendars.newEvent.eventTitle") },
                 { key: "start", label: Locale.label("calendars.newEvent.start") },
                 { key: "recurrence", label: Locale.label("calendars.newEvent.repeats") },
-                { key: "skipped", label: Locale.label("groups.groupCalendar.skippedDates") },
+                { key: "skipped", label: Locale.label("groups.groupCalendar.skippedDates"), align: "right" as const },
                 { key: "visibility", label: Locale.label("calendars.newEvent.visibility") },
                 { key: "rsvps", label: Locale.label("groups.groupCalendar.rsvps") },
-                { key: "actions", label: "" }
+                { key: "actions", label: "", align: "right" as const }
               ]}
             />
             <TableBody>
@@ -137,10 +137,10 @@ export const GroupCalendarTab = (props: Props) => {
                   <TableCell>{ev.title}</TableCell>
                   <TableCell>{new Date(ev.start).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" })}</TableCell>
                   <TableCell>{describeRecurrence(ev.recurrenceRule)}</TableCell>
-                  <TableCell>{(ev as any).exceptionDates?.length || 0}</TableCell>
+                  <TableCell align="right">{(ev as any).exceptionDates?.length || 0}</TableCell>
                   <TableCell>{ev.visibility === "private" ? Locale.label("calendars.newEvent.private") : Locale.label("calendars.newEvent.public")}</TableCell>
                   <TableCell>{renderRsvpCell(ev)}</TableCell>
-                  <TableCell align="right">
+                  <TableCell align="right" className="rowActions">
                     <IconButton size="small" onClick={() => handleDelete(ev)} aria-label={Locale.label("common.delete")} data-testid={`delete-event-${ev.id}`}>
                       <DeleteIcon fontSize="small" />
                     </IconButton>

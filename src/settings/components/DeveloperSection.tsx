@@ -186,7 +186,7 @@ export const DeveloperSection: React.FC = () => {
                         <TableCell>{renderScopes(c.scopes)}</TableCell>
                         <TableCell>{fmtDate(c.createdAt)}</TableCell>
                         <TableCell>{fmtDate(c.expiresAt)}</TableCell>
-                        <TableCell align="right">
+                        <TableCell align="right" className="rowActions">
                           <Button size="small" onClick={() => handleRevoke(c)}>{Locale.label("settings.developer.revoke")}</Button>
                         </TableCell>
                       </TableRow>

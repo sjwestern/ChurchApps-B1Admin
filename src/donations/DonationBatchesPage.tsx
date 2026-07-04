@@ -5,10 +5,10 @@ import { Link } from "react-router-dom";
 import { Permissions } from "@churchapps/apphelper";
 import { type DonationBatchInterface } from "@churchapps/helpers";
 import { useQuery } from "@tanstack/react-query";
-import { Icon, Table, TableBody, TableCell, TableRow, Box, Typography, Card, Stack, Button } from "@mui/material";
+import { Icon, Table, TableBody, TableCell, TableRow, Box, Typography, Card, Stack } from "@mui/material";
 import { VolunteerActivism as DonationIcon, Add as AddIcon, CalendarMonth as DateIcon, Edit as EditIcon } from "@mui/icons-material";
 import { AppIconButton } from "../components/ui/AppIconButton";
-import { CountChip, EmptyState, ExportButton, SortableTableHead, type SortDirection } from "../components/ui";
+import { CountChip, EmptyState, ExportButton, SortableTableHead, HeaderPrimaryButton, type SortDirection } from "../components/ui";
 
 export const DonationBatchesPage = () => {
   const [editBatchId, setEditBatchId] = React.useState("notset");
@@ -128,15 +128,15 @@ export const DonationBatchesPage = () => {
               <Typography variant="body2">{DateHelper.prettyDate(dateObj)}</Typography>
             </Stack>
           </TableCell>
-          <TableCell>
-            <Stack direction="row" spacing={1} alignItems="center">
+          <TableCell align="right">
+            <Stack direction="row" spacing={1} alignItems="center" justifyContent="flex-end">
               <Icon sx={{ color: "text.secondary", fontSize: 18 }}>receipt</Icon>
               <Typography variant="body2" sx={{ fontWeight: 500 }}>
                 {b.donationCount}
               </Typography>
             </Stack>
           </TableCell>
-          <TableCell>
+          <TableCell align="right">
             <Typography variant="body2" sx={{ fontWeight: 600, color: "success.main" }}>
               {CurrencyHelper.formatCurrencyWithLocale(b.totalAmount, currency)}
             </Typography>
@@ -158,8 +158,8 @@ export const DonationBatchesPage = () => {
               columns={[
                 { key: "name", label: Locale.label("common.name"), sortable: true },
                 { key: "batchDate", label: Locale.label("donations.donationsPage.date"), sortable: true },
-                { key: "donationCount", label: Locale.label("donations.donationsPage.don") },
-                { key: "totalAmount", label: Locale.label("donations.donationsPage.total") },
+                { key: "donationCount", label: Locale.label("donations.donationsPage.don"), align: "right" },
+                { key: "totalAmount", label: Locale.label("donations.donationsPage.total"), align: "right" },
                 { key: "edit", label: "", align: "right" }
               ]}
               sortBy={sortBy}
@@ -229,26 +229,15 @@ export const DonationBatchesPage = () => {
             </Stack>
           )}
           {UserHelper.checkAccess(Permissions.givingApi.donations.edit) && (
-            <Button
-              variant="outlined"
-              sx={{
-                color: "#FFF",
-                borderColor: "rgba(255,255,255,0.5)",
-                "&:hover": {
-                  borderColor: "#FFF",
-                  backgroundColor: "rgba(255,255,255,0.1)"
-                },
-                position: { md: "relative" },
-                ml: { md: "auto" },
-                zIndex: 1
-              }}
+            <HeaderPrimaryButton
+              sx={{ position: { md: "relative" }, ml: { md: "auto" }, zIndex: 1 }}
               startIcon={<AddIcon />}
               onClick={() => {
                 setEditBatchId("");
               }}
               data-testid="add-batch-button">
               {Locale.label("donations.donationBatchesPage.addBatch")}
-            </Button>
+            </HeaderPrimaryButton>
           )}
         </Stack>
       </PageHeader>

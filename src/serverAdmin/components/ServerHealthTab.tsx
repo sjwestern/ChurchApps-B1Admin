@@ -54,9 +54,9 @@ export const ServerHealthTab = () => {
         <Table size="small">
           <TableHead>
             <TableRow>
-              <TableCell sx={{ fontWeight: 600 }}>{Locale.label("serverAdmin.serverHealth.setting")}</TableCell>
-              <TableCell sx={{ fontWeight: 600, width: 120 }}>{Locale.label("serverAdmin.serverHealth.status")}</TableCell>
-              <TableCell sx={{ fontWeight: 600 }}>{Locale.label("serverAdmin.serverHealth.detail")}</TableCell>
+              <TableCell>{Locale.label("serverAdmin.serverHealth.setting")}</TableCell>
+              <TableCell sx={{ width: 120 }}>{Locale.label("serverAdmin.serverHealth.status")}</TableCell>
+              <TableCell>{Locale.label("serverAdmin.serverHealth.detail")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

@@ -14,10 +14,11 @@ interface Props {
   selectedTab: string;
   onTabChange: (tab: string) => void;
   showForms?: boolean;
+  onHeader?: boolean;
 }
 
 export const PersonNavigation = memo((props: Props) => {
-  const { selectedTab, onTabChange, showForms } = props;
+  const { selectedTab, onTabChange, showForms, onHeader } = props;
 
   const tabs: NavigationTab[] = useMemo(() => {
     const list: NavigationTab[] = [
@@ -36,6 +37,7 @@ export const PersonNavigation = memo((props: Props) => {
       selectedTab={selectedTab}
       onTabChange={onTabChange}
       tabs={tabs}
+      onHeader={onHeader}
     />
   );
 });

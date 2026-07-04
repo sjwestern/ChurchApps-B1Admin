@@ -80,7 +80,7 @@ export function FilesManager() {
             </a>
           </Stack>
         </TableCell>
-        <TableCell>
+        <TableCell align="right">
           <Typography variant="body2" color="text.secondary">
             {formatSize(file.size)}
           </Typography>
@@ -105,12 +105,12 @@ export function FilesManager() {
             icon={<FileIcon sx={{ color: "primary.main", fontSize: 20 }} />}
             actions={files?.length > 0 && <CountChip count={files.length} />}>
             <Table sx={{ minWidth: 650 }}>
-              <TableHead sx={{ backgroundColor: "background.paper", "& .MuiTableCell-root": { borderBottom: "2px solid", borderBottomColor: "divider" } }}>
+              <TableHead>
                 <TableRow>
                   <TableCell>
                     <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>{Locale.label("site.filesManager.name")}</Typography>
                   </TableCell>
-                  <TableCell>
+                  <TableCell align="right">
                     <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>{Locale.label("site.filesManager.size")}</Typography>
                   </TableCell>
                   <TableCell align="right"></TableCell>

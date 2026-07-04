@@ -1,5 +1,5 @@
 import { useParams, Link } from "react-router-dom";
-import { Box, Button, Container, Typography } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import { GridOn as GridOnIcon } from "@mui/icons-material";
 import { Loading, PageHeader, Locale } from "@churchapps/apphelper";
 import { useQuery } from "@tanstack/react-query";
@@ -7,7 +7,7 @@ import { type GroupInterface } from "@churchapps/helpers";
 import { type PlanTypeInterface } from "../../helpers";
 import { PlanList } from "../components/PlanList";
 import { PlanTypeGroups } from "../components/PlanTypeGroups";
-import { Breadcrumbs, type BreadcrumbItem } from "../../components/ui";
+import { Breadcrumbs, type BreadcrumbItem, HeaderSecondaryButton } from "../../components/ui";
 
 export const PlanTypePage = () => {
   const params = useParams();
@@ -48,15 +48,13 @@ export const PlanTypePage = () => {
         subtitle={Locale.label("plans.planTypePage.subtitle")}
         breadcrumbs={<Breadcrumbs items={breadcrumbItems} showHome={true} />}
       >
-        <Button
+        <HeaderSecondaryButton
           component={Link}
           to={`/serving/overview?planTypeId=${planType.data.id}&ministryId=${planType.data.ministryId}`}
-          variant="outlined"
           startIcon={<GridOnIcon />}
-          sx={{ color: "#FFF", borderColor: "rgba(255,255,255,0.5)", "&:hover": { borderColor: "#FFF", backgroundColor: "rgba(255,255,255,0.1)" } }}
         >
           {Locale.label("plans.planTypePage.overview")}
-        </Button>
+        </HeaderSecondaryButton>
       </PageHeader>
 
       <Box sx={{ p: 3 }}>

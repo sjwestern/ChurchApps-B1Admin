@@ -76,7 +76,7 @@ export const DevicesPage = () => {
                   <TableCell>{device.label || Locale.label("profile.devices.device")}</TableCell>
                   <TableCell>{DateHelper.toDate(device.registrationDate).toLocaleDateString()}</TableCell>
                   <TableCell>{DateHelper.toDate(device.lastActiveDate).toLocaleDateString()}</TableCell>
-                  <TableCell align="right">
+                  <TableCell align="right" className="rowActions">
                     <AppIconButton
                       label={Locale.label("common.edit")}
                       icon={<EditIcon />}

@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { SermonEdit } from "./SermonEdit";
 import { PlaylistEdit } from "./PlaylistEdit";
 import { AppIconButton } from "../../components/ui/AppIconButton";
-import { CountChip } from "../../components/ui";
+import { CountChip, HeaderPrimaryButton } from "../../components/ui";
 
 export const Sermons = () => {
   const [sermons, setSermons] = React.useState<SermonInterface[]>([]);
@@ -60,23 +60,14 @@ export const Sermons = () => {
 
   const getActionButtons = () => (
     <>
-      <Button
-        variant="outlined"
+      <HeaderPrimaryButton
         startIcon={<AddIcon />}
         endIcon={<ArrowDropDownIcon />}
         onClick={handleMenuClick}
         data-testid="add-sermon-button"
-        sx={{
-          color: "#FFF",
-          borderColor: "rgba(255,255,255,0.5)",
-          "&:hover": {
-            borderColor: "#FFF",
-            backgroundColor: "rgba(255,255,255,0.1)"
-          }
-        }}
       >
         {Locale.label("sermons.addSermon")}
-      </Button>
+      </HeaderPrimaryButton>
       <Menu
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
@@ -252,16 +243,7 @@ export const Sermons = () => {
     else {
       return (
         <Table sx={{ minWidth: 650 }}>
-          <TableHead
-            sx={{
-              backgroundColor: "background.paper",
-              "& .MuiTableCell-root": {
-                borderBottom: "2px solid",
-                borderBottomColor: "divider",
-                fontWeight: 600
-              }
-            }}
-          >
+          <TableHead>
             <TableRow>
               <TableCell sx={{ width: "25%" }}>{Locale.label("sermons.playlist")}</TableCell>
               <TableCell sx={{ width: "45%" }}>{Locale.label("sermons.sermon")}</TableCell>

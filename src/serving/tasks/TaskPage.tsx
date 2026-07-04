@@ -3,6 +3,7 @@ import { Menu, MenuItem, Box, Stack, Button } from "@mui/material";
 import { ApiHelper, Notes, DateHelper, type ConversationInterface, Locale, Loading, PageHeader } from "@churchapps/apphelper";
 import { type TaskInterface } from "@churchapps/helpers";
 import { useParams } from "react-router-dom";
+import { HeaderPrimaryButton, HeaderSecondaryButton } from "../../components/ui";
 import { ContentPicker } from "./components/ContentPicker";
 import UserContext from "../../UserContext";
 import { RequestedChanges } from "./components/RequestedChanges";
@@ -116,40 +117,22 @@ export const TaskPage = () => {
               }}>
               {task.data.status}
             </Button>
-            <Button
-              variant="outlined"
-              size="small"
-              startIcon={<PersonIcon />}
-              onClick={() => setModalField("assignedTo")}
-              sx={{
-                color: "#FFF",
-                borderColor: "rgba(255,255,255,0.5)",
-                minWidth: "auto",
-                "&:hover": {
-                  borderColor: "#FFF",
-                  backgroundColor: "rgba(255,255,255,0.1)"
-                }
-              }}
-              title={Locale.label("tasks.taskPage.editAssigned")}>
-              {Locale.label("tasks.taskPage.assign")}
-            </Button>
-            <Button
-              variant="outlined"
+            <HeaderSecondaryButton
               size="small"
               startIcon={<GroupIcon />}
               onClick={() => setModalField("associatedWith")}
-              sx={{
-                color: "#FFF",
-                borderColor: "rgba(255,255,255,0.5)",
-                minWidth: "auto",
-                "&:hover": {
-                  borderColor: "#FFF",
-                  backgroundColor: "rgba(255,255,255,0.1)"
-                }
-              }}
+              sx={{ minWidth: "auto" }}
               title={Locale.label("tasks.taskPage.editAssoc")}>
               {Locale.label("tasks.taskPage.associate")}
-            </Button>
+            </HeaderSecondaryButton>
+            <HeaderPrimaryButton
+              size="small"
+              startIcon={<PersonIcon />}
+              onClick={() => setModalField("assignedTo")}
+              sx={{ minWidth: "auto" }}
+              title={Locale.label("tasks.taskPage.editAssigned")}>
+              {Locale.label("tasks.taskPage.assign")}
+            </HeaderPrimaryButton>
           </Stack>
         </PageHeader>
         <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={closeStatusMenu}>

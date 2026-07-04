@@ -254,15 +254,7 @@ export const GroupMembers: React.FC<Props> = memo((props) => {
   }, [groupMembers.data, canEdit, handleToggleLeader, handleRemove]);
 
   const headerCellSx = {
-    fontSize: "0.7rem",
-    fontWeight: 600,
-    letterSpacing: "0.06em",
-    textTransform: "uppercase",
-    color: "text.secondary",
-    borderBottom: "1px solid",
-    borderColor: "divider",
     py: 1,
-    bgcolor: "grey.50",
     "&&:first-of-type": { pl: 2.5 },
     "&&:last-of-type": { pr: 1.5 }
   } as const;

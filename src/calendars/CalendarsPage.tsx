@@ -29,6 +29,7 @@ import { CalendarEdit } from "./components";
 import { PermissionDenied } from "../components";
 import { EmptyState } from "../components/ui/EmptyState";
 import { AppIconButton } from "../components/ui/AppIconButton";
+import { HeaderPrimaryButton } from "../components/ui/headerButtons";
 
 export const CalendarsPage = () => {
   const [calendars, setCalendars] = useState<CuratedCalendarInterface[]>([]);
@@ -133,22 +134,13 @@ export const CalendarsPage = () => {
         }
       >
         {UserHelper.checkAccess(Permissions.contentApi.content.edit) && (
-          <Button
-            variant="outlined"
+          <HeaderPrimaryButton
             startIcon={<AddIcon />}
             onClick={() => setCurrentCalendar({} as CuratedCalendarInterface)}
-            sx={{
-              color: "#FFF",
-              borderColor: "rgba(255,255,255,0.5)",
-              "&:hover": {
-                borderColor: "#FFF",
-                backgroundColor: "rgba(255,255,255,0.1)"
-              }
-            }}
             data-testid="add-calendar"
           >
             {Locale.label("calendars.calendarList.addCalendar")}
-          </Button>
+          </HeaderPrimaryButton>
         )}
       </PageHeader>
 
@@ -188,12 +180,12 @@ export const CalendarsPage = () => {
             }}
           >
             <Table>
-              <TableHead sx={{ backgroundColor: "background.paper" }}>
+              <TableHead>
                 <TableRow>
-                  <TableCell sx={{ fontWeight: 600, color: "text.secondary" }}>
+                  <TableCell>
                     {Locale.label("calendars.calendarList.calendar")}
                   </TableCell>
-                  <TableCell sx={{ fontWeight: 600, color: "text.secondary" }}>
+                  <TableCell>
                     {Locale.label("calendars.calendarList.status")}
                   </TableCell>
                   <TableCell align="right" />

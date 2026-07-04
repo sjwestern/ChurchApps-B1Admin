@@ -102,12 +102,12 @@ export const RegistrationsPage = () => {
             </Box>
           ) : (
             <Table>
-              <TableHead sx={{ backgroundColor: "var(--bg-sub)" }}>
+              <TableHead>
                 <TableRow>
-                  <TableCell sx={{ fontWeight: 600 }}>{Locale.label("registrations.registrationsPage.event")}</TableCell>
-                  <TableCell sx={{ fontWeight: 600 }}>{Locale.label("registrations.registrationsPage.date")}</TableCell>
-                  <TableCell sx={{ fontWeight: 600 }}>{Locale.label("registrations.registrationsPage.registrations")}</TableCell>
-                  <TableCell sx={{ fontWeight: 600 }}>{Locale.label("registrations.registrationsPage.tags")}</TableCell>
+                  <TableCell>{Locale.label("registrations.registrationsPage.event")}</TableCell>
+                  <TableCell>{Locale.label("registrations.registrationsPage.date")}</TableCell>
+                  <TableCell>{Locale.label("registrations.registrationsPage.registrations")}</TableCell>
+                  <TableCell>{Locale.label("registrations.registrationsPage.tags")}</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>{getRows()}</TableBody>

@@ -10,8 +10,7 @@ import {
   Card,
   Box,
   Stack,
-  TableHead,
-  Button
+  TableHead
 } from "@mui/material";
 import { Delete as DeleteIcon, CalendarMonth as CalendarIcon, Groups as GroupsIcon, Add as AddIcon, Print as PrintIcon, UploadFile as ImportIcon } from "@mui/icons-material";
 import { ApiHelper, UserHelper, Loading, PageHeader, Locale, Permissions } from "@churchapps/apphelper";
@@ -22,6 +21,7 @@ import { NewEventModal } from "./components/NewEventModal";
 import { ImportIcsModal } from "./components/ImportIcsModal";
 import { AppIconButton } from "../components/ui/AppIconButton";
 import { CountChip } from "../components/ui";
+import { HeaderPrimaryButton, HeaderSecondaryButton } from "../components/ui/headerButtons";
 
 const printStyles = `@media print {
   body * { visibility: hidden; }
@@ -78,8 +78,6 @@ export const CalendarPage = () => {
   if (!curatedCalendarId) return null;
   if (!UserHelper.checkAccess(Permissions.contentApi.content.edit)) return <PermissionDenied permissions={[Permissions.contentApi.content.edit]} />;
 
-  const headerButtonSx = { color: "#FFF", borderColor: "rgba(255,255,255,0.5)", "&:hover": { borderColor: "#FFF", backgroundColor: "rgba(255,255,255,0.1)" } };
-
   return (
     <>
       <style>{printStyles}</style>
@@ -87,15 +85,15 @@ export const CalendarPage = () => {
         title={currentCalendar?.name || Locale.label("calendars.calendarPage.calendar")}
         subtitle={Locale.label("calendars.calendarPage.subtitle")}
       >
-        <Button variant="outlined" startIcon={<AddIcon />} onClick={() => setShowNewEvent(true)} sx={headerButtonSx} data-testid="new-event-button">
-          {Locale.label("calendars.calendarPage.newEvent")}
-        </Button>
-        <Button variant="outlined" startIcon={<ImportIcon />} onClick={() => setShowImport(true)} sx={headerButtonSx} data-testid="import-ics-button">
+        <HeaderSecondaryButton startIcon={<ImportIcon />} onClick={() => setShowImport(true)} data-testid="import-ics-button">
           {Locale.label("calendars.calendarPage.importIcs")}
-        </Button>
-        <Button variant="outlined" startIcon={<PrintIcon />} onClick={() => window.print()} sx={headerButtonSx} data-testid="print-calendar-button">
+        </HeaderSecondaryButton>
+        <HeaderSecondaryButton startIcon={<PrintIcon />} onClick={() => window.print()} data-testid="print-calendar-button">
           {Locale.label("calendars.calendarPage.print")}
-        </Button>
+        </HeaderSecondaryButton>
+        <HeaderPrimaryButton startIcon={<AddIcon />} onClick={() => setShowNewEvent(true)} data-testid="new-event-button">
+          {Locale.label("calendars.calendarPage.newEvent")}
+        </HeaderPrimaryButton>
       </PageHeader>
 
       <Box sx={{ p: 3 }}>
@@ -164,9 +162,9 @@ export const CalendarPage = () => {
                   </Box>
                 ) : (
                   <Table size="small">
-                    <TableHead sx={{ backgroundColor: "var(--bg-sub)" }}>
+                    <TableHead>
                       <TableRow>
-                        <TableCell sx={{ fontWeight: 600, color: "text.secondary" }}>
+                        <TableCell>
                           {Locale.label("calendars.calendarPage.groupName")}
                         </TableCell>
                         <TableCell align="right" />

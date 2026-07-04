@@ -61,10 +61,10 @@ export const CustomFieldsSection: React.FC = () => {
           </Stack>
           {rows.length > 0 ? (
             <Table>
-              <TableHead sx={{ backgroundColor: "var(--bg-sub)" }}>
+              <TableHead>
                 <TableRow>
-                  <TableCell sx={{ fontWeight: 600 }}>{Locale.label("settings.customFieldEdit.name")}</TableCell>
-                  <TableCell sx={{ fontWeight: 600 }}>{Locale.label("settings.customFieldEdit.fieldType")}</TableCell>
+                  <TableCell>{Locale.label("settings.customFieldEdit.name")}</TableCell>
+                  <TableCell>{Locale.label("settings.customFieldEdit.fieldType")}</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>{rows}</TableBody>

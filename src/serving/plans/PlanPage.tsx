@@ -67,8 +67,8 @@ export const PlanPage = () => {
         title={plan.name || Locale.label("plans.planPage.servicePlan")}
         subtitle={Locale.label("plans.planPage.subtitle")}
         breadcrumbs={<Breadcrumbs items={breadcrumbItems} showHome={true} />}
+        tabs={<PlanNavigation selectedTab={selectedTab} onTabChange={setSelectedTab} plan={plan} onHeader />}
       />
-      <PlanNavigation selectedTab={selectedTab} onTabChange={setSelectedTab} plan={plan} />
 
       <Box sx={{ p: 3 }}>{getCurrentTab()}</Box>
     </>

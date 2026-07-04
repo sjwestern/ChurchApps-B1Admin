@@ -148,7 +148,7 @@ export const PlanTypeGroups = React.memo(({ planTypeId, ministryId }: Props) => 
         <Paper sx={{ width: "100%", overflow: "hidden" }}>
           <Table size="small">
             <TableHead>
-              <TableRow sx={{ backgroundColor: "background.subtle" }}>
+              <TableRow>
                 <TableCell sx={{ fontWeight: 600 }}>{Locale.label("common.name")}</TableCell>
                 <TableCell sx={{ fontWeight: 600 }}>{Locale.label("plans.planTypeGroups.showsLabel")}</TableCell>
                 {canEdit && <TableCell align="right" sx={{ width: 50 }} />}

@@ -225,11 +225,11 @@ export const RegistrationDetailsPage = () => {
             : reg.personId || Locale.label("registrations.registrationDetailsPage.unknown")
           }
         </TableCell>
-        <TableCell>{reg.members?.length || 0}</TableCell>
+        <TableCell align="right">{reg.members?.length || 0}</TableCell>
         <TableCell>{getTypeNames(reg)}</TableCell>
-        <TableCell>
+        <TableCell align="right">
           {total > 0 ? (
-            <Stack direction="row" spacing={0.5} alignItems="center">
+            <Stack direction="row" spacing={0.5} alignItems="center" justifyContent="flex-end">
               <Typography variant="body2">{money(paid)} / {money(total)}</Typography>
               {balance > 0 && <Chip size="small" color="warning" label={money(balance)} />}
             </Stack>
@@ -320,14 +320,14 @@ export const RegistrationDetailsPage = () => {
                 </Box>
               ) : (
                 <Table size="small">
-                  <TableHead sx={{ backgroundColor: "var(--bg-sub)" }}>
+                  <TableHead>
                     <TableRow>
-                      <TableCell sx={{ fontWeight: 600 }}>{Locale.label("registrations.registrationDetailsPage.name")}</TableCell>
-                      <TableCell sx={{ fontWeight: 600 }}>{Locale.label("registrations.registrationDetailsPage.members")}</TableCell>
-                      <TableCell sx={{ fontWeight: 600 }}>{Locale.label("registrations.commerce.type")}</TableCell>
-                      <TableCell sx={{ fontWeight: 600 }}>{Locale.label("registrations.commerce.paidTotal")}</TableCell>
-                      <TableCell sx={{ fontWeight: 600 }}>{Locale.label("registrations.registrationDetailsPage.status")}</TableCell>
-                      <TableCell sx={{ fontWeight: 600 }}>{Locale.label("registrations.registrationDetailsPage.date")}</TableCell>
+                      <TableCell>{Locale.label("registrations.registrationDetailsPage.name")}</TableCell>
+                      <TableCell align="right">{Locale.label("registrations.registrationDetailsPage.members")}</TableCell>
+                      <TableCell>{Locale.label("registrations.commerce.type")}</TableCell>
+                      <TableCell align="right">{Locale.label("registrations.commerce.paidTotal")}</TableCell>
+                      <TableCell>{Locale.label("registrations.registrationDetailsPage.status")}</TableCell>
+                      <TableCell>{Locale.label("registrations.registrationDetailsPage.date")}</TableCell>
                       <TableCell align="right" />
                     </TableRow>
                   </TableHead>

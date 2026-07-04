@@ -107,11 +107,11 @@ export const AttendanceSetup = memo(() => {
     if (attendance.data.length === 0 && campuses.length === 0) return [];
     return [
       <TableRow key="header">
-        <TableCell sx={{ fontWeight: 600, color: "text.secondary" }}>{Locale.label("attendance.attendancePage.campus")}</TableCell>
-        <TableCell sx={{ fontWeight: 600, color: "text.secondary" }}>{Locale.label("attendance.attendancePage.service")}</TableCell>
-        <TableCell sx={{ fontWeight: 600, color: "text.secondary" }}>{Locale.label("attendance.attendancePage.time")}</TableCell>
-        <TableCell sx={{ fontWeight: 600, color: "text.secondary" }}>{Locale.label("attendance.attendancePage.category")}</TableCell>
-        <TableCell sx={{ fontWeight: 600, color: "text.secondary" }}>{Locale.label("attendance.attendancePage.group")}</TableCell>
+        <TableCell>{Locale.label("attendance.attendancePage.campus")}</TableCell>
+        <TableCell>{Locale.label("attendance.attendancePage.service")}</TableCell>
+        <TableCell>{Locale.label("attendance.attendancePage.time")}</TableCell>
+        <TableCell>{Locale.label("attendance.attendancePage.category")}</TableCell>
+        <TableCell>{Locale.label("attendance.attendancePage.group")}</TableCell>
       </TableRow>
     ];
   }, [attendance.data.length, campuses.length]);
@@ -350,7 +350,7 @@ export const AttendanceSetup = memo(() => {
           borderColor: "divider"
         }}>
         <Table size="medium">
-          <TableHead sx={{ backgroundColor: "background.subtle" }}>{tableHeader}</TableHead>
+          <TableHead>{tableHeader}</TableHead>
           <TableBody sx={{ whiteSpace: "nowrap" }}>{getRows()}</TableBody>
         </Table>
       </Paper>

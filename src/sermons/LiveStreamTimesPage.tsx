@@ -49,8 +49,11 @@ export const LiveStreamTimesPage = memo(() => {
 
   return (
     <>
-      <PageHeader title={Locale.label("sermons.liveStreamTimes.title")} subtitle={Locale.label("sermons.liveStreamTimes.subtitle")} />
-      <NavigationTabs selectedTab={selectedTab} onTabChange={setSelectedTab} tabs={tabs} />
+      <PageHeader
+        title={Locale.label("sermons.liveStreamTimes.title")}
+        subtitle={Locale.label("sermons.liveStreamTimes.subtitle")}
+        tabs={<NavigationTabs selectedTab={selectedTab} onTabChange={setSelectedTab} tabs={tabs} onHeader />}
+      />
       <Box sx={{ p: 3 }}>
         {getCurrentTab()}
       </Box>

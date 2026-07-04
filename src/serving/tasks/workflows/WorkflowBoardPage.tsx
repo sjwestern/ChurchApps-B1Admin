@@ -13,6 +13,7 @@ import { WorkflowCardDrawer } from "./components/WorkflowCardDrawer";
 import { WorkflowTriggersManager } from "./components/WorkflowTriggersManager";
 import { ContentPicker } from "../components/ContentPicker";
 import { NavigationTabs } from "../../../components/ui/NavigationTabs";
+import { HeaderPrimaryButton, HeaderSecondaryButton } from "../../../components/ui";
 import { type WorkflowBoardInterface, type WorkflowStepInterface, type TaskInterface, type WorkflowInterface, type WorkflowCategoryInterface } from "@churchapps/helpers";
 import { canViewWorkflows, canEditCards, canManageWorkflows } from "./permissions";
 
@@ -101,24 +102,29 @@ export const WorkflowBoardPage = () => {
 
   return (
     <>
-      <PageHeader title={board.data?.workflow?.name || Locale.label("tasks.workflowsPage.title")} subtitle={Locale.label("tasks.workflowBoard.subtitle")}>
+      <PageHeader
+        title={board.data?.workflow?.name || Locale.label("tasks.workflowsPage.title")}
+        subtitle={Locale.label("tasks.workflowBoard.subtitle")}
+        tabs={(
+          <NavigationTabs
+            selectedTab={tab}
+            onTabChange={(v) => setTab(v as "board" | "triggers")}
+            testId="board-tabs"
+            onHeader
+            tabs={[
+              { value: "board", label: Locale.label("tasks.workflowBoard.boardTab"), icon: <EditIcon fontSize="small" />, testId: "board-tab" },
+              { value: "triggers", label: Locale.label("tasks.eventTriggers.title"), icon: <TriggerIcon fontSize="small" />, testId: "board-triggers-tab" }
+            ]}
+          />
+        )}
+      >
         <Stack direction="row" spacing={1}>
-          <Button variant="outlined" startIcon={<BackIcon />} onClick={() => navigate("/serving/tasks/workflows")} sx={{ color: "#FFF", borderColor: "rgba(255,255,255,0.5)" }}>{Locale.label("tasks.workflowsPage.title")}</Button>
-          {canManage && <Button variant="outlined" startIcon={<EditIcon />} data-testid="edit-workflow-button" onClick={handleEditWorkflow} sx={{ color: "#FFF", borderColor: "rgba(255,255,255,0.5)" }}>{Locale.label("tasks.workflowEdit.editWorkflow")}</Button>}
-          <Button variant="outlined" startIcon={<ReportIcon />} data-testid="board-reports-button" onClick={() => navigate("/serving/tasks/workflows/" + workflowId + "/reports")} sx={{ color: "#FFF", borderColor: "rgba(255,255,255,0.5)" }}>{Locale.label("tasks.workflowReports.title")}</Button>
-          {canManage && tab === "board" && <Button variant="outlined" startIcon={<AddIcon />} data-testid="add-step-button" onClick={handleAddStep} sx={{ color: "#FFF", borderColor: "rgba(255,255,255,0.5)", "&:hover": { borderColor: "#FFF" } }}>{Locale.label("tasks.workflowBoard.addStep")}</Button>}
+          <HeaderSecondaryButton startIcon={<BackIcon />} onClick={() => navigate("/serving/tasks/workflows")}>{Locale.label("tasks.workflowsPage.title")}</HeaderSecondaryButton>
+          {canManage && <HeaderSecondaryButton startIcon={<EditIcon />} data-testid="edit-workflow-button" onClick={handleEditWorkflow}>{Locale.label("tasks.workflowEdit.editWorkflow")}</HeaderSecondaryButton>}
+          <HeaderSecondaryButton startIcon={<ReportIcon />} data-testid="board-reports-button" onClick={() => navigate("/serving/tasks/workflows/" + workflowId + "/reports")}>{Locale.label("tasks.workflowReports.title")}</HeaderSecondaryButton>
+          {canManage && tab === "board" && <HeaderPrimaryButton startIcon={<AddIcon />} data-testid="add-step-button" onClick={handleAddStep}>{Locale.label("tasks.workflowBoard.addStep")}</HeaderPrimaryButton>}
         </Stack>
       </PageHeader>
-
-      <NavigationTabs
-        selectedTab={tab}
-        onTabChange={(v) => setTab(v as "board" | "triggers")}
-        testId="board-tabs"
-        tabs={[
-          { value: "board", label: Locale.label("tasks.workflowBoard.boardTab"), icon: <EditIcon fontSize="small" />, testId: "board-tab" },
-          { value: "triggers", label: Locale.label("tasks.eventTriggers.title"), icon: <TriggerIcon fontSize="small" />, testId: "board-triggers-tab" }
-        ]}
-      />
 
       {tab === "triggers" && (
         <Box sx={{ p: 3 }}>

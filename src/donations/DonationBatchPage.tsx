@@ -4,8 +4,9 @@ import { UserHelper, Permissions, DateHelper, PageHeader, Locale, CurrencyHelper
 import { type DonationBatchInterface, type FundInterface, type DonationInterface } from "@churchapps/helpers";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { Box, Card, Stack, Button, Typography } from "@mui/material";
+import { Box, Card, Stack, Typography } from "@mui/material";
 import { Receipt as ReceiptIcon, Edit as EditIcon } from "@mui/icons-material";
+import { HeaderSecondaryButton } from "../components/ui";
 
 export const DonationBatchPage = () => {
   const params = useParams();
@@ -114,24 +115,13 @@ export const DonationBatchPage = () => {
             </Stack>
           )}
           {UserHelper.checkAccess(Permissions.givingApi.donations.edit) && (
-            <Button
-              variant="outlined"
+            <HeaderSecondaryButton
               startIcon={<EditIcon />}
               onClick={() => setEditBatch(true)}
               data-testid="edit-batch-button"
-              sx={{
-                color: "#FFF",
-                borderColor: "rgba(255,255,255,0.5)",
-                "&:hover": {
-                  borderColor: "#FFF",
-                  backgroundColor: "rgba(255,255,255,0.1)"
-                },
-                position: { md: "relative" },
-                ml: { md: "auto" },
-                zIndex: 1
-              }}>
+              sx={{ position: { md: "relative" }, ml: { md: "auto" }, zIndex: 1 }}>
               {Locale.label("donations.donationBatchPage.editBatch")}
-            </Button>
+            </HeaderSecondaryButton>
           )}
         </Stack>
       </PageHeader>

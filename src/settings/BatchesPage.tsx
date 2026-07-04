@@ -129,7 +129,7 @@ export const BatchesPage: React.FC = () => {
                     <TableCell>{Locale.label("settings.batches.label")}</TableCell>
                     <TableCell>{Locale.label("settings.batches.source")}</TableCell>
                     <TableCell>{Locale.label("settings.batches.status")}</TableCell>
-                    <TableCell>{Locale.label("settings.batches.items")}</TableCell>
+                    <TableCell align="right">{Locale.label("settings.batches.items")}</TableCell>
                     <TableCell>{Locale.label("settings.batches.created")}</TableCell>
                     <TableCell>{Locale.label("settings.batches.creator")}</TableCell>
                     <TableCell align="right">{Locale.label("settings.batches.actions")}</TableCell>
@@ -148,10 +148,10 @@ export const BatchesPage: React.FC = () => {
                         <TableCell>{batch.label || "—"}</TableCell>
                         <TableCell>{batch.source || "—"}</TableCell>
                         <TableCell><Chip label={batch.status} color={statusColor(batch.status)} size="small" /></TableCell>
-                        <TableCell>{batch.itemCount ?? 0}</TableCell>
+                        <TableCell align="right">{batch.itemCount ?? 0}</TableCell>
                         <TableCell sx={{ whiteSpace: "nowrap" }}>{formatDate(batch.created)}</TableCell>
                         <TableCell><Typography variant="body2" sx={{ fontFamily: "monospace", fontSize: "0.8rem" }}>{batch.userId}</Typography></TableCell>
-                        <TableCell align="right">
+                        <TableCell align="right" className="rowActions">
                           <Button size="small" startIcon={<VisibilityIcon />} onClick={() => openResults(batch)}>{Locale.label("settings.batches.viewResults")}</Button>
                           <Button size="small" color="warning" startIcon={<UndoIcon />} disabled={batch.status !== "completed"} onClick={() => setUndoBatch(batch)}>{Locale.label("settings.batches.undo")}</Button>
                         </TableCell>

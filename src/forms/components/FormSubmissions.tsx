@@ -157,27 +157,13 @@ export const FormSubmissions: React.FC<Props> = memo((props) => {
     const result: JSX.Element[] = [];
     if (formSubmissions.data?.length) {
       result.push(
-        <TableCell key="submittedBy" sx={{ fontWeight: 600 }}>
-          <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
-            {formSubmissions.data[0].contentType === "person" ? Locale.label("forms.formSubmissions.subFor") : Locale.label("forms.formSubmissions.subBy")}
-          </Typography>
+        <TableCell key="submittedBy">
+          {formSubmissions.data[0].contentType === "person" ? Locale.label("forms.formSubmissions.subFor") : Locale.label("forms.formSubmissions.subBy")}
         </TableCell>
       );
-      result.push(
-        <TableCell key="submissionDate" sx={{ fontWeight: 600 }}>
-          <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
-            {Locale.label("forms.formSubmissions.subDate")}
-          </Typography>
-        </TableCell>
-      );
+      result.push(<TableCell key="submissionDate">{Locale.label("forms.formSubmissions.subDate")}</TableCell>);
       [...formSubmissions.data[0].questions].sort((a: QuestionInterface, b: QuestionInterface) => (a.title > b.title ? 1 : -1)).forEach((question: QuestionInterface) =>
-        result.push(
-          <TableCell key={question.id} sx={{ fontWeight: 600 }}>
-            <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
-              {question.title}
-            </Typography>
-          </TableCell>
-        ));
+        result.push(<TableCell key={question.id}>{question.title}</TableCell>));
     }
     return result;
   }, [formSubmissions.data]);
@@ -286,14 +272,7 @@ export const FormSubmissions: React.FC<Props> = memo((props) => {
         </Box>
         <Box>
           <Table sx={{ minWidth: 650 }}>
-            <TableHead
-              sx={{
-                backgroundColor: "grey.50",
-                "& .MuiTableCell-root": {
-                  borderBottom: "2px solid",
-                  borderBottomColor: "divider"
-                }
-              }}>
+            <TableHead>
               <TableRow key="header">{tableHeader}</TableRow>
             </TableHead>
             <TableBody>{tableRows}</TableBody>

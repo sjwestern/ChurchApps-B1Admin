@@ -121,7 +121,7 @@ export const StripeImportPage = () => {
         <TableCell>
           <Typography variant="body2">{event.type}</Typography>
         </TableCell>
-        <TableCell>
+        <TableCell align="right">
           <Typography variant="body2" sx={{ fontWeight: 600, color: "success.main" }}>
             {CurrencyHelper.formatCurrencyWithLocale(event.amount, event.currency || "usd")}
           </Typography>
@@ -261,22 +261,14 @@ export const StripeImportPage = () => {
             <Box sx={{ p: 2 }}>
               {getSummary()}
               <Table sx={{ minWidth: 650 }}>
-                <TableHead
-                  sx={{
-                    backgroundColor: "grey.50",
-                    "& .MuiTableCell-root": {
-                      borderBottom: "2px solid",
-                      borderBottomColor: "divider"
-                    }
-                  }}
-                >
+                <TableHead>
                   <TableRow>
-                    <TableCell sx={{ fontWeight: 600 }}>{Locale.label("donations.stripeImportPage.eventId")}</TableCell>
-                    <TableCell sx={{ fontWeight: 600 }}>{Locale.label("donations.stripeImportPage.type")}</TableCell>
-                    <TableCell sx={{ fontWeight: 600 }}>Amount</TableCell>
-                    <TableCell sx={{ fontWeight: 600 }}>Date</TableCell>
-                    <TableCell sx={{ fontWeight: 600 }}>{Locale.label("donations.stripeImportPage.status")}</TableCell>
-                    <TableCell sx={{ fontWeight: 600 }}>Notes</TableCell>
+                    <TableCell>{Locale.label("donations.stripeImportPage.eventId")}</TableCell>
+                    <TableCell>{Locale.label("donations.stripeImportPage.type")}</TableCell>
+                    <TableCell align="right">Amount</TableCell>
+                    <TableCell>Date</TableCell>
+                    <TableCell>{Locale.label("donations.stripeImportPage.status")}</TableCell>
+                    <TableCell>Notes</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>{getRows()}</TableBody>

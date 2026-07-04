@@ -7,7 +7,7 @@ import { SmartButton as BlockIcon, Add as AddIcon, Edit as EditIcon, Settings as
 import { Link } from "react-router-dom";
 import { BlockEdit, SiteSwitcher, SitesDialog, useSiteSelection } from "./components";
 import { PermissionDenied } from "../components";
-import { CountChip } from "../components/ui";
+import { CountChip, HeaderPrimaryButton } from "../components/ui";
 
 export const BlocksPage = () => {
   const [blocks, setBlocks] = useState<BlockInterface[]>([]);
@@ -89,7 +89,7 @@ export const BlocksPage = () => {
               </Typography>
             </Stack>
           </TableCell>
-          <TableCell align="right">
+          <TableCell align="right" className="rowActions">
             <Stack direction="row" spacing={1} justifyContent="flex-end">
               <Tooltip title={Locale.label("common.edit")}>
                 <IconButton size="small" aria-label={Locale.label("common.edit")} component={Link} to={`/site/blocks/${block.id}`}><EditIcon fontSize="small" /></IconButton>
@@ -133,7 +133,7 @@ export const BlocksPage = () => {
 
     return (
       <Table sx={{ minWidth: 650 }}>
-        <TableHead sx={{ backgroundColor: "background.paper", "& .MuiTableCell-root": { borderBottom: "2px solid", borderBottomColor: "divider" } }}>
+        <TableHead>
           {getTableHeader()}
         </TableHead>
         <TableBody>{getRows()}</TableBody>
@@ -161,7 +161,7 @@ export const BlocksPage = () => {
     <>
       <PageHeader title={Locale.label("site.blocksPage.reusableBlocks")} subtitle={Locale.label("site.blocksPage.subtitle")} statistics={[{ icon: <BlockIcon />, value: stats.totalBlocks.toString(), label: Locale.label("site.blocksPage.totalBlocks") }]}>
         <SiteSwitcher siteId={siteId} onChange={setSiteId} sites={sites} onManage={() => setShowSites(true)} />
-        <Button variant="outlined" startIcon={<AddIcon />} onClick={() => setEditBlock({ blockType: "elementBlock", siteId })} data-testid="add-block-button" sx={{ color: "#FFF", borderColor: "rgba(255,255,255,0.5)", "&:hover": { borderColor: "#FFF", backgroundColor: "rgba(255,255,255,0.1)" } }}>{Locale.label("site.blocksPage.addBlock")}</Button>
+        <HeaderPrimaryButton startIcon={<AddIcon />} onClick={() => setEditBlock({ blockType: "elementBlock", siteId })} data-testid="add-block-button">{Locale.label("site.blocksPage.addBlock")}</HeaderPrimaryButton>
       </PageHeader>
       {showSites && (
         <SitesDialog open={showSites} onClose={() => setShowSites(false)} sites={sites} siteId={siteId} onChanged={reloadSites} onSelectSite={setSiteId} />

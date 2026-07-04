@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useState } from "react";
 import { ApiHelper, Loading, Locale, PageHeader, UserHelper } from "@churchapps/apphelper";
 import { Permissions } from "@churchapps/helpers";
-import { Box, Button, Chip, Menu, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { Box, Chip, Menu, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { Add as AddIcon, Delete as DeleteIcon, Edit as EditIcon, Label as LabelIcon, StarBorder as StarBorderIcon } from "@mui/icons-material";
 import { PermissionDenied } from "../components";
 import { EmptyState } from "../components/ui/EmptyState";
 import { AppIconButton } from "../components/ui/AppIconButton";
+import { HeaderPrimaryButton } from "../components/ui";
 import { LabelEditor, newBlockId, type LabelTemplateInterface } from "./components/LabelEditor";
 
 // Starters mirror B1Checkin's bundled 1_1x3_5 / pickup_1_1x3_5 HTML labels.
@@ -74,15 +75,13 @@ export const LabelsPage = () => {
     <>
       <PageHeader title={Locale.label("attendance.labels.title")} subtitle={Locale.label("attendance.labels.subtitle")}>
         {!editing && (
-          <Button
-            variant="outlined"
+          <HeaderPrimaryButton
             startIcon={<AddIcon />}
             onClick={(e) => setMenuAnchor(e.currentTarget)}
-            sx={{ color: "#FFF", borderColor: "rgba(255,255,255,0.5)", "&:hover": { borderColor: "#FFF", backgroundColor: "rgba(255,255,255,0.1)" } }}
             data-testid="add-label"
           >
             {Locale.label("common.add")}
-          </Button>
+          </HeaderPrimaryButton>
         )}
       </PageHeader>
       <Menu anchorEl={menuAnchor} open={Boolean(menuAnchor)} onClose={() => setMenuAnchor(null)}>
@@ -102,9 +101,9 @@ export const LabelsPage = () => {
                   <Table data-testid="labels-table">
                     <TableHead>
                       <TableRow>
-                        <TableCell sx={{ fontWeight: 600, color: "text.secondary" }}>{Locale.label("attendance.labels.name")}</TableCell>
-                        <TableCell sx={{ fontWeight: 600, color: "text.secondary" }}>{Locale.label("attendance.labels.type")}</TableCell>
-                        <TableCell sx={{ fontWeight: 600, color: "text.secondary" }}>{Locale.label("attendance.labels.size")}</TableCell>
+                        <TableCell>{Locale.label("attendance.labels.name")}</TableCell>
+                        <TableCell>{Locale.label("attendance.labels.type")}</TableCell>
+                        <TableCell>{Locale.label("attendance.labels.size")}</TableCell>
                         <TableCell align="right" />
                       </TableRow>
                     </TableHead>
@@ -114,7 +113,7 @@ export const LabelsPage = () => {
                           <TableCell>{t.name}</TableCell>
                           <TableCell>{Locale.label(t.labelType === "pickup" ? "attendance.labels.pickup" : "attendance.labels.nametag")}</TableCell>
                           <TableCell>{`${Number(t.width)}" × ${Number(t.height)}"`}</TableCell>
-                          <TableCell align="right">
+                          <TableCell align="right" className="rowActions">
                             {t.isDefault
                               ? <Chip label={Locale.label("attendance.labels.default")} color="primary" size="small" sx={{ mr: 1 }} />
                               : <AppIconButton tone="card" label={Locale.label("attendance.labels.setDefault")} icon={<StarBorderIcon />} onClick={() => handleSetDefault(t)} data-testid={`default-label-${t.id}`} />}

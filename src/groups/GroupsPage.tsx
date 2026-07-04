@@ -7,7 +7,7 @@ import { Add as AddIcon, Folder as FolderIcon, Group as GroupIcon, Inbox as Inbo
 import { type GroupInterface, type GroupJoinRequestInterface } from "@churchapps/helpers";
 import { useMountedState, Permissions } from "@churchapps/apphelper";
 import { useQuery } from "@tanstack/react-query";
-import { CountChip, ExportButton, SortableTableHead } from "../components/ui";
+import { CountChip, ExportButton, SortableTableHead, HeaderPrimaryButton, HeaderSecondaryButton } from "../components/ui";
 
 const formatHeader = (key: string): string => {
   const customMap: Record<string, string> = {
@@ -144,9 +144,9 @@ const GroupsPage = () => {
               <Chip key={`${g.id}-${label}-${index}`} label={label} variant="outlined" size="small" style={{ marginRight: 5 }} />
             ))}
           </TableCell>
-          <TableCell>{memberCount}</TableCell>
+          <TableCell align="right">{memberCount}</TableCell>
           {showArchived && (
-            <TableCell align="right">
+            <TableCell align="right" className="rowActions">
               {canEditGroups && (
                 <Button size="small" onClick={() => handleRestore(g)} data-testid={`restore-group-${g.id}`}>
                   {Locale.label("groups.groupsPage.restore")}
@@ -196,8 +196,8 @@ const GroupsPage = () => {
                     { key: "categoryName", label: Locale.label("groups.groupsPage.cat") },
                     { key: "name", label: Locale.label("common.name") },
                     { key: "labels", label: Locale.label("groups.groupsPage.labels") },
-                    { key: "memberCount", label: Locale.label("groups.groupsPage.ppl") },
-                    ...(showArchived ? [{ key: "actions", label: "" }] : [])
+                    { key: "memberCount", label: Locale.label("groups.groupsPage.ppl"), align: "right" as const },
+                    ...(showArchived ? [{ key: "actions", label: "", align: "right" as const }] : [])
                   ]}
                 />
               )}
@@ -216,59 +216,21 @@ const GroupsPage = () => {
         subtitle={groups.length > 0 ? Locale.label("groups.groupsPage.subtitle.manage").replace("{count}", groups.length.toString()) : Locale.label("groups.groupsPage.subtitle.create")}
       >
         {canApproveRequests && pendingCount > 0 && (
-          <Button
-            variant="outlined"
-            component={Link}
-            to="/groups/pending"
-            startIcon={<InboxIcon />}
-            data-testid="pending-requests-link"
-            sx={{
-              color: "#FFF",
-              borderColor: "rgba(255,255,255,0.5)",
-              "&:hover": {
-                borderColor: "#FFF",
-                backgroundColor: "rgba(255,255,255,0.1)"
-              }
-            }}>
+          <HeaderSecondaryButton component={Link} to="/groups/pending" startIcon={<InboxIcon />} data-testid="pending-requests-link">
             {pendingCount === 1
               ? Locale.label("groups.groupsPage.pendingRequestSingular").replace("{count}", pendingCount.toString())
               : Locale.label("groups.groupsPage.pendingRequests").replace("{count}", pendingCount.toString())}
-          </Button>
+          </HeaderSecondaryButton>
         )}
         {UserHelper.checkAccess(Permissions.membershipApi.groupMembers.view) && (
-          <Button
-            variant="outlined"
-            component={Link}
-            to="/groups/health"
-            startIcon={<HealthIcon />}
-            data-testid="group-health-link"
-            sx={{
-              color: "#FFF",
-              borderColor: "rgba(255,255,255,0.5)",
-              "&:hover": {
-                borderColor: "#FFF",
-                backgroundColor: "rgba(255,255,255,0.1)"
-              }
-            }}>
+          <HeaderSecondaryButton component={Link} to="/groups/health" startIcon={<HealthIcon />} data-testid="group-health-link">
             {Locale.label("groups.groupHealth.title")}
-          </Button>
+          </HeaderSecondaryButton>
         )}
         {UserHelper.checkAccess(Permissions.membershipApi.groups.edit) && (
-          <Button
-            variant="outlined"
-            startIcon={<AddIcon />}
-            onClick={() => setShowAdd(true)}
-            sx={{
-              color: "#FFF",
-              borderColor: "rgba(255,255,255,0.5)",
-              "&:hover": {
-                borderColor: "#FFF",
-                backgroundColor: "rgba(255,255,255,0.1)"
-              }
-            }}
-            data-testid="add-group-button">
+          <HeaderPrimaryButton startIcon={<AddIcon />} onClick={() => setShowAdd(true)} data-testid="add-group-button">
             {Locale.label("groups.groupsPage.addGroup")}
-          </Button>
+          </HeaderPrimaryButton>
         )}
       </PageHeader>
 

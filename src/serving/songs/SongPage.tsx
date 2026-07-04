@@ -8,7 +8,7 @@ import { LibraryMusic as MusicIcon, Add as AddIcon, QueueMusic as ArrangementIco
 import { AppIconButton } from "../../components/ui/AppIconButton";
 import { Arrangement } from "./components/Arrangement";
 import { EmptyState } from "../../components/ui/EmptyState";
-import { CountChip } from "../../components/ui";
+import { CountChip, HeaderPrimaryButton } from "../../components/ui";
 import { SongDetailsEdit } from "./components/SongDetailsEdit";
 import { SongDetailLinks } from "./components/SongDetailLinks";
 import { SongDetailLinksEdit } from "./components/SongDetailLinksEdit";
@@ -212,20 +212,9 @@ export const SongPage = memo(() => {
           <AppIconButton label={Locale.label("common.delete")} icon={<DeleteIcon />} tone="header" intent="remove" onClick={handleDeleteSong} />
         )}
         {canEdit && (
-          <Button
-            variant="outlined"
-            startIcon={<AddIcon />}
-            onClick={handleAddArrangement}
-            sx={{
-              color: "#FFF",
-              borderColor: "rgba(255,255,255,0.5)",
-              "&:hover": {
-                borderColor: "#FFF",
-                backgroundColor: "rgba(255,255,255,0.1)"
-              }
-            }}>
+          <HeaderPrimaryButton startIcon={<AddIcon />} onClick={handleAddArrangement}>
             {Locale.label("songs.songPage.addArrangement")}
-          </Button>
+          </HeaderPrimaryButton>
         )}
       </PageHeader>
 

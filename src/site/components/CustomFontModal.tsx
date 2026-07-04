@@ -66,7 +66,7 @@ export function CustomFontModal(props: Props) {
 
       return (
         <Table sx={{ minWidth: 650, minHeight: 400 }}>
-          <TableHead sx={{ backgroundColor: "grey.50", "& .MuiTableCell-root": { borderBottom: "2px solid", borderBottomColor: "divider" } }}>
+          <TableHead>
             <TableRow>
               <TableCell><Typography variant="subtitle2" sx={{ fontWeight: 600 }}>{Locale.label("site.customFontModal.name")}</Typography></TableCell>
               <TableCell><Typography variant="subtitle2" sx={{ fontWeight: 600 }}>{Locale.label("site.customFontModal.sample")}</Typography></TableCell>

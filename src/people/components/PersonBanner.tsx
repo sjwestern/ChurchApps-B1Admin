@@ -18,10 +18,11 @@ import { AddToWorkflowDialog } from "./AddToWorkflowDialog";
 interface Props {
   person: PersonInterface;
   togglePhotoEditor?: (show: boolean) => void;
+  tabs?: ReactNode;
 }
 
 export const PersonBanner = memo((props: Props) => {
-  const { person, togglePhotoEditor } = props;
+  const { person, togglePhotoEditor, tabs } = props;
 
   const [userEmail, setUserEmail] = useState<string>("");
   const [showTextDialog, setShowTextDialog] = useState(false);
@@ -101,7 +102,7 @@ export const PersonBanner = memo((props: Props) => {
   const hasMobile = !!person.contactInfo?.mobilePhone;
 
   return (
-    <PageHeader avatar={avatar} title={person?.name?.display || ""} subtitle={subtitle} chips={chips} statistics={statistics}>
+    <PageHeader avatar={avatar} title={person?.name?.display || ""} subtitle={subtitle} chips={chips} statistics={statistics} tabs={tabs}>
       {person.contactInfo?.email && (
         <AppIconButton label={Locale.label("people.personBanner.emailPerson")} icon={<EmailIcon />} tone="header" onClick={() => (window.location.href = `mailto:${person.contactInfo?.email}`)} />
       )}

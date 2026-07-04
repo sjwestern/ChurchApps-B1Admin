@@ -8,7 +8,7 @@ import { Box, Button, Grid, FormControlLabel, Switch } from "@mui/material";
 import { Assignment as AssignmentIcon, Add as AddIcon, Edit as EditIcon } from "@mui/icons-material";
 import { useQuery } from "@tanstack/react-query";
 import { type GroupInterface, type GroupMemberInterface } from "@churchapps/helpers";
-import { EmptyState } from "../components/ui";
+import { EmptyState, HeaderPrimaryButton, HeaderSecondaryButton } from "../components/ui";
 import { NavigationTabs } from "../components/ui/NavigationTabs";
 import UserContext from "../UserContext";
 import { Link } from "react-router-dom";
@@ -104,7 +104,18 @@ export const ServingPage = () => {
 
   return (
     <>
-      <PageHeader title={selectedMinistry?.name || Locale.label("components.wrapper.serving")} subtitle={Locale.label("plans.ministryPage.subtitle")}>
+      <PageHeader
+        title={selectedMinistry?.name || Locale.label("components.wrapper.serving")}
+        subtitle={Locale.label("plans.ministryPage.subtitle")}
+        tabs={groups.length > 1 && (
+          <NavigationTabs
+            selectedTab={selectedMinistryId || ""}
+            onTabChange={setSelectedMinistryId}
+            tabs={groups.map((g) => ({ value: g.id, label: g.name }))}
+            onHeader
+          />
+        )}
+      >
         {isAdmin && (
           <FormControlLabel
             control={
@@ -121,48 +132,16 @@ export const ServingPage = () => {
         {UserHelper.checkAccess(Permissions.membershipApi.groups.edit) && (
           <>
             {selectedMinistry && (
-              <Button
-                component={Link}
-                to={`/groups/${selectedMinistry.id}?tag=ministry`}
-                variant="outlined"
-                startIcon={<EditIcon />}
-                sx={{
-                  color: "#FFF",
-                  borderColor: "rgba(255,255,255,0.5)",
-                  mr: 1,
-                  "&:hover": {
-                    borderColor: "#FFF",
-                    backgroundColor: "rgba(255,255,255,0.1)"
-                  }
-                }}>
+              <HeaderSecondaryButton component={Link} to={`/groups/${selectedMinistry.id}?tag=ministry`} startIcon={<EditIcon />}>
                 {Locale.label("plans.plansPage.editMinistry")}
-              </Button>
+              </HeaderSecondaryButton>
             )}
-            <Button
-              variant="outlined"
-              startIcon={<AddIcon />}
-              onClick={handleShowAdd}
-              sx={{
-                color: "#FFF",
-                borderColor: "rgba(255,255,255,0.5)",
-                "&:hover": {
-                  borderColor: "#FFF",
-                  backgroundColor: "rgba(255,255,255,0.1)"
-                }
-              }}>
+            <HeaderPrimaryButton startIcon={<AddIcon />} onClick={handleShowAdd}>
               {Locale.label("plans.plansPage.addMinistry")}
-            </Button>
+            </HeaderPrimaryButton>
           </>
         )}
       </PageHeader>
-
-      {groups.length > 1 && (
-        <NavigationTabs
-          selectedTab={selectedMinistryId || ""}
-          onTabChange={setSelectedMinistryId}
-          tabs={groups.map((g) => ({ value: g.id, label: g.name }))}
-        />
-      )}
 
       <Box sx={{ p: 3 }}>
         {selectedMinistry && (

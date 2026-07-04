@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
 import { Box, Button, Card, Chip, Stack, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
 import { Add as AddIcon, Article as ArticleIcon, Delete as DeleteIcon, Edit as EditIcon, RssFeed as RssFeedIcon } from "@mui/icons-material";
 import { ApiHelper, PageHeader, UserHelper, Locale, Permissions } from "@churchapps/apphelper";
 import { BlogPostEdit } from "./components";
 import { PermissionDenied } from "../components";
 import { AppIconButton } from "../components/ui/AppIconButton";
+import { HeaderPrimaryButton } from "../components/ui";
 import { ConfirmDialog } from "./admin/ConfirmDialog";
 import type { PostInterface } from "../helpers/Interfaces";
 
 export const BlogPage = () => {
-  const theme = useTheme();
   const [posts, setPosts] = useState<PostInterface[]>([]);
   const [editPost, setEditPost] = useState<PostInterface | null>(null);
   const [deletePost, setDeletePost] = useState<PostInterface | null>(null);
@@ -48,9 +47,9 @@ export const BlogPage = () => {
         onCancel={() => setDeletePost(null)}
       />
       <PageHeader title={Locale.label("site.blog.title")} subtitle={Locale.label("site.blog.subtitle")} statistics={[{ icon: <RssFeedIcon />, value: posts.length.toString(), label: Locale.label("site.blog.posts") }]}>
-        <Button variant="outlined" startIcon={<AddIcon />} onClick={() => setEditPost({})} data-testid="add-post-button" sx={{ color: "#FFF", borderColor: "rgba(255,255,255,0.5)", "&:hover": { borderColor: "#FFF", backgroundColor: "rgba(255,255,255,0.1)" } }}>
+        <HeaderPrimaryButton startIcon={<AddIcon />} onClick={() => setEditPost({})} data-testid="add-post-button">
           {Locale.label("site.blog.addPost")}
-        </Button>
+        </HeaderPrimaryButton>
       </PageHeader>
       <Box sx={{ p: 3 }}>
         <Card sx={{ borderRadius: 2, border: "1px solid", borderColor: "grey.200" }}>
@@ -69,7 +68,7 @@ export const BlogPage = () => {
               </Box>
             ) : (
               <Table>
-                <TableHead sx={{ backgroundColor: theme.palette.mode === "light" ? "grey.50" : "grey.700" }}>
+                <TableHead>
                   <TableRow>
                     <TableCell sx={{ width: 120 }}><Typography variant="subtitle2" sx={{ fontWeight: 600 }}>{Locale.label("site.pagesPage.actions")}</Typography></TableCell>
                     <TableCell><Typography variant="subtitle2" sx={{ fontWeight: 600 }}>{Locale.label("common.title")}</Typography></TableCell>
@@ -81,7 +80,7 @@ export const BlogPage = () => {
                 <TableBody>
                   {posts.map((post) => (
                     <TableRow key={post.id} sx={{ "&:hover": { backgroundColor: "action.hover" } }}>
-                      <TableCell>
+                      <TableCell className="rowActions">
                         <Stack direction="row">
                           <AppIconButton label={Locale.label("common.edit")} icon={<EditIcon />} onClick={() => setEditPost(post)} data-testid="edit-post-button" />
                           <AppIconButton label={Locale.label("common.delete")} icon={<DeleteIcon />} intent="remove" onClick={() => setDeletePost(post)} data-testid="delete-post-button" />

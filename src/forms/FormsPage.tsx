@@ -8,7 +8,7 @@ import { Description as DescriptionIcon, Add as AddIcon, Archive as ArchiveIcon,
 import { PageHeader } from "@churchapps/apphelper";
 import { PermissionDenied } from "../components";
 import { useQuery } from "@tanstack/react-query";
-import { CountChip, SmartTabs } from "../components/ui";
+import { CountChip, NavigationTabs, HeaderPrimaryButton, type NavigationTab } from "../components/ui";
 import { AppIconButton } from "../components/ui/AppIconButton";
 
 export const FormsPage = () => {
@@ -69,7 +69,7 @@ export const FormsPage = () => {
             </Box>
           </TableCell>
           <TableCell>{formLink}</TableCell>
-          <TableCell style={{ textAlign: "right" }}>
+          <TableCell align="right" className="rowActions">
             {archiveLink || unarchiveLink} {duplicateLink} {editLink}
           </TableCell>
         </TableRow>
@@ -122,6 +122,13 @@ export const FormsPage = () => {
     if (selectedTab === "forms") return <FormEdit formId={selectedFormId} updatedFunction={handleUpdate}></FormEdit>;
   };
 
+  const formsCount = forms.data?.filter(form => !form.archived)?.length || 0;
+  const archivedCount = archivedForms.data?.filter(form => form.archived === true)?.length || 0;
+
+  React.useEffect(() => {
+    if (selectedTab === "archived" && archivedCount === 0) setSelectedTab("forms");
+  }, [selectedTab, archivedCount]);
+
   if (!formPermission) return <PermissionDenied permissions={[Permissions.membershipApi.forms.admin, Permissions.membershipApi.forms.edit]} />;
   if (forms.isLoading || archivedForms.isLoading) return <Loading />;
 
@@ -131,9 +138,6 @@ export const FormsPage = () => {
       <TableBody>{rows}</TableBody>
     </Table>
   );
-
-  const formsCount = forms.data?.filter(form => !form.archived)?.length || 0;
-  const archivedCount = archivedForms.data?.filter(form => form.archived === true)?.length || 0;
 
   const formsCard = (
     <Card sx={{ mt: getEditSlot() ? 2 : 0 }}>
@@ -165,42 +169,28 @@ export const FormsPage = () => {
     </Card>
   );
 
-  const tabs = [
-    {
-      key: "forms",
-      label: Locale.label("forms.formsPage.forms"),
-      content: (
-        <>
-          {getEditSlot()}
-          {formsCard}
-        </>
-      )
-    },
-    { key: "archived", label: Locale.label("forms.formsPage.archForms"), content: archivedCard, hidden: archivedCount === 0 }
-  ];
+  const headerTabs: NavigationTab[] = [{ value: "forms", label: Locale.label("forms.formsPage.forms") }];
+  if (archivedCount > 0) headerTabs.push({ value: "archived", label: Locale.label("forms.formsPage.archForms") });
 
   return (
     <>
-      <PageHeader title={Locale.label("forms.formsPage.forms")} subtitle={Locale.label("forms.formsPage.subtitleManage")}>
+      <PageHeader
+        title={Locale.label("forms.formsPage.forms")}
+        subtitle={Locale.label("forms.formsPage.subtitleManage")}
+        tabs={<NavigationTabs selectedTab={selectedTab} onTabChange={setSelectedTab} tabs={headerTabs} onHeader />}>
         {formPermission && selectedTab !== "archived" && (
-          <Button
-            variant="outlined"
-            startIcon={<AddIcon />}
-            onClick={() => {
-              setSelectedFormId("");
-            }}
-            sx={{
-              color: "#FFF",
-              borderColor: "rgba(255,255,255,0.5)",
-              "&:hover": { borderColor: "#FFF", backgroundColor: "rgba(255,255,255,0.1)" }
-            }}
-            data-testid="add-form-button">
+          <HeaderPrimaryButton startIcon={<AddIcon />} onClick={() => setSelectedFormId("")} data-testid="add-form-button">
             {Locale.label("forms.formsPage.addForm")}
-          </Button>
+          </HeaderPrimaryButton>
         )}
       </PageHeader>
       <Box sx={{ p: 3 }}>
-        <SmartTabs tabs={tabs} value={selectedTab} onChange={setSelectedTab} ariaLabel="forms-tabs" />
+        {selectedTab === "archived" && archivedCount > 0 ? archivedCard : (
+          <>
+            {getEditSlot()}
+            {formsCard}
+          </>
+        )}
       </Box>
     </>
   );

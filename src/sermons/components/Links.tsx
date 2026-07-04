@@ -87,7 +87,7 @@ export const Links: React.FC<Props> = (props) => {
                       <td>
                         <a href={link.url} style={{ marginLeft: (nestedLevel * 20) + "px" }}>{link.text}</a>
                       </td>
-                      <td style={{ textAlign: "right" }}>
+                      <td style={{ textAlign: "right" }} className="rowActions">
                         {upLink}
                         {downLink}
                         <AppIconButton label={Locale.label("common.edit")} icon={<EditIcon />} onClick={() => setCurrentLink(link)} />
@@ -103,7 +103,7 @@ export const Links: React.FC<Props> = (props) => {
                     <td>
                       <a href={link.url} style={{ marginLeft: (nestedLevel * 20) + "px" }}>{link.text}</a>
                     </td>
-                    <td style={{ textAlign: "right" }}>
+                    <td style={{ textAlign: "right" }} className="rowActions">
                       {upLink}
                       {downLink}
                       <AppIconButton label={Locale.label("common.edit")} icon={<EditIcon />} onClick={() => setCurrentLink(link)} />
@@ -127,7 +127,7 @@ export const Links: React.FC<Props> = (props) => {
         <>
           <tr key={idx}>
             <td><a href={link.url}>{link.text}</a></td>
-            <td style={{ textAlign: "right" }}>
+            <td style={{ textAlign: "right" }} className="rowActions">
               {upLink}
               {downLink}
               <AppIconButton label={Locale.label("common.edit")} icon={<EditIcon />} onClick={() => setCurrentLink(link)} />

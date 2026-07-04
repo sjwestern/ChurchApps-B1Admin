@@ -4,10 +4,11 @@ import dayjs from "dayjs";
 import { Calendar, dayjsLocalizer } from "react-big-calendar";
 import { ApiHelper, UserHelper, EventHelper, Loading, PageHeader, Locale } from "@churchapps/apphelper";
 import { Permissions } from "@churchapps/helpers";
-import { Box, Button, MenuItem, Stack, TextField } from "@mui/material";
+import { Box, MenuItem, Stack, TextField } from "@mui/material";
 import { Add as AddIcon } from "@mui/icons-material";
 import { PermissionDenied } from "../components";
 import { NewEventModal } from "./components/NewEventModal";
+import { HeaderPrimaryButton } from "../components/ui/headerButtons";
 import { type CalendarBlockoutInterface, type EventBookingInterface, type ResourceInterface, type RoomInterface } from "./interfaces";
 
 type CalEvent = { title: string; start: Date; end: Date; kind: "approved" | "pending" | "blockout" };
@@ -112,15 +113,13 @@ export const AvailabilityPage = () => {
   return (
     <>
       <PageHeader title={Locale.label("calendars.availability.title")} subtitle={Locale.label("calendars.availability.subtitle")}>
-        <Button
-          variant="outlined"
+        <HeaderPrimaryButton
           startIcon={<AddIcon />}
           onClick={() => setShowBook(true)}
-          sx={{ color: "#FFF", borderColor: "rgba(255,255,255,0.5)", "&:hover": { borderColor: "#FFF", backgroundColor: "rgba(255,255,255,0.1)" } }}
           data-testid="availability-book-button"
         >
           {Locale.label("calendars.availability.book")}
-        </Button>
+        </HeaderPrimaryButton>
       </PageHeader>
       <Box sx={{ p: 3 }}>
         <Stack direction="row" spacing={2} alignItems="center" sx={{ mb: 2 }}>

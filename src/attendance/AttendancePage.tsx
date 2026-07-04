@@ -74,8 +74,8 @@ export const AttendancePage = () => {
           { icon: <Icon>groups</Icon>, value: stats.unscheduledGroups.toString(), label: Locale.label("attendance.attendancePage.unscheduled") },
           { icon: <GroupIcon />, value: stats.totalGroups.toString(), label: Locale.label("attendance.attendancePage.totalGroups") }
         ]}
+        tabs={<AttendanceNavigation selectedTab={selectedTab} onTabChange={setSelectedTab} onHeader />}
       />
-      <AttendanceNavigation selectedTab={selectedTab} onTabChange={setSelectedTab} />
 
       <PageContainer>
         <Grid container spacing={3}>

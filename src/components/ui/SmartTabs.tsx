@@ -51,7 +51,7 @@ export const SmartTabs: React.FC<SmartTabsProps> = ({ tabs, value, onChange, ari
   return (
     <Box>
       <div style={{ backgroundColor: theme.palette.background.paper, borderBottom: `1px solid ${theme.palette.divider}` }}>
-        <MuiTabs value={selectedIndex} onChange={handleChange} aria-label={ariaLabel} variant="fullWidth" sx={navigationTabsSx}>
+        <MuiTabs value={selectedIndex} onChange={handleChange} aria-label={ariaLabel} variant="scrollable" scrollButtons="auto" allowScrollButtonsMobile sx={navigationTabsSx}>
           {visibleTabs.map((t) => (
             <Tab key={t.key} label={t.label} disabled={t.disabled} />
           ))}

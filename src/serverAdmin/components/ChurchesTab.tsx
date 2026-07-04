@@ -108,7 +108,7 @@ export const ChurchesTab = () => {
             <>{Locale.label("serverAdmin.adminPage.noChurch")}</>
           ) : (
             <Table size="small" id="adminChurchesTable">
-              <TableHead sx={{ "& .MuiTableCell-root": { backgroundColor: "background.subtle" } }}>
+              <TableHead>
                 <TableRow>
                   <TableCell>{Locale.label("serverAdmin.adminPage.church")}</TableCell>
                   <TableCell>{Locale.label("serverAdmin.adminPage.location")}</TableCell>

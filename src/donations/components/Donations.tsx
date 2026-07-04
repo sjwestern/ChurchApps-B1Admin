@@ -63,35 +63,12 @@ export const Donations: React.FC<Props> = ({ currency = "usd", ...props }) => {
     }
 
     return (
-      <TableHead
-        sx={{
-          backgroundColor: "grey.50",
-          "& .MuiTableCell-root": {
-            borderBottom: "2px solid",
-            borderBottomColor: "divider"
-          }
-        }}>
+      <TableHead>
         <TableRow>
-          <TableCell sx={{ fontWeight: 600 }}>
-            <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
-              {Locale.label("donations.donations.tableIdent")}
-            </Typography>
-          </TableCell>
-          <TableCell sx={{ fontWeight: 600 }}>
-            <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
-              {Locale.label("common.name")}
-            </Typography>
-          </TableCell>
-          <TableCell sx={{ fontWeight: 600 }}>
-            <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
-              {Locale.label("donations.donations.date")}
-            </Typography>
-          </TableCell>
-          <TableCell sx={{ fontWeight: 600 }}>
-            <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
-              {Locale.label("donations.donations.amt")}
-            </Typography>
-          </TableCell>
+          <TableCell>{Locale.label("donations.donations.tableIdent")}</TableCell>
+          <TableCell>{Locale.label("common.name")}</TableCell>
+          <TableCell>{Locale.label("donations.donations.date")}</TableCell>
+          <TableCell align="right">{Locale.label("donations.donations.amt")}</TableCell>
           {canEdit && <TableCell align="right" />}
         </TableRow>
       </TableHead>
@@ -152,10 +129,10 @@ export const Donations: React.FC<Props> = ({ currency = "usd", ...props }) => {
               {d.donationDate ? DateHelper.prettyDate(new Date(d.donationDate.split("T")[0] + "T00:00:00")) : ""}
             </IconText>
           </TableCell>
-          <TableCell>
-            <IconText icon={<></>} iconSize={18} iconColor={isPending ? "warning.main" : "success.main"} variant="body2" color={isPending ? "warning.main" : "success.main"}>
-              <span style={{ fontWeight: 600 }}>{CurrencyHelper.formatCurrencyWithLocale(d.amount, currency)}</span>
-            </IconText>
+          <TableCell align="right">
+            <Typography variant="body2" sx={{ fontWeight: 600, color: isPending ? "warning.main" : "success.main" }}>
+              {CurrencyHelper.formatCurrencyWithLocale(d.amount, currency)}
+            </Typography>
           </TableCell>
           {canEdit && <TableCell align="right" className="rowActions">{editButton}</TableCell>}
         </TableRow>
@@ -174,13 +151,10 @@ export const Donations: React.FC<Props> = ({ currency = "usd", ...props }) => {
         </TableCell>
         <TableCell></TableCell>
         <TableCell></TableCell>
-        <TableCell>
-          <Stack direction="row" spacing={1} alignItems="center">
-            {/* <MoneyIcon sx={{ color: "success.main", fontSize: 20 }} /> */}
-            <Typography variant="subtitle1" sx={{ fontWeight: 600, color: "success.main" }}>
-              {CurrencyHelper.formatCurrencyWithLocale(donationsTotal, currency)}
-            </Typography>
-          </Stack>
+        <TableCell align="right">
+          <Typography variant="subtitle1" sx={{ fontWeight: 600, color: "success.main" }}>
+            {CurrencyHelper.formatCurrencyWithLocale(donationsTotal, currency)}
+          </Typography>
         </TableCell>
         {canEdit && <TableCell></TableCell>}
       </TableRow>

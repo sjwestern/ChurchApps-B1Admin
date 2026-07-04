@@ -13,7 +13,7 @@ import { type ActiveFilter } from "./components/AdvancedPeopleSearch";
 import { People as PeopleIcon, PersonAdd as PersonAddIcon, Print as PrintIcon, BookmarkAdd as SaveListIcon, BarChart as BarChartIcon, Close as CloseIcon } from "@mui/icons-material";
 import { PageHeader } from "@churchapps/apphelper";
 import { AppIconButton } from "../components/ui/AppIconButton";
-import { CountChip, ExportButton } from "../components/ui";
+import { CountChip, ExportButton, HeaderPrimaryButton, HeaderSecondaryButton } from "../components/ui";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { AISearch } from "./components/AISearch";
 import { PeopleBulkActions } from "./components/bulk/PeopleBulkActions";
@@ -373,38 +373,13 @@ export const PeoplePage = memo(() => {
               ? Locale.label("people.peoplePage.loading")
               : Locale.label("people.peoplePage.noPeopleFound")
         }>
-        <Button
-          variant="outlined"
-          sx={{
-            color: "#FFF",
-            borderColor: "rgba(255,255,255,0.5)",
-            mr: 1,
-            "&:hover": {
-              borderColor: "#FFF",
-              backgroundColor: "rgba(255,255,255,0.1)"
-            }
-          }}
-          startIcon={<BarChartIcon />}
-          onClick={() => navigate("/people/demographics")}
-          data-testid="demographics-button">
+        <HeaderSecondaryButton startIcon={<BarChartIcon />} onClick={() => navigate("/people/demographics")} data-testid="demographics-button">
           {Locale.label("people.demographics.title")}
-        </Button>
+        </HeaderSecondaryButton>
         {canEdit && (
-          <Button
-            variant="outlined"
-            sx={{
-              color: "#FFF",
-              borderColor: "rgba(255,255,255,0.5)",
-              "&:hover": {
-                borderColor: "#FFF",
-                backgroundColor: "rgba(255,255,255,0.1)"
-              }
-            }}
-            startIcon={<PersonAddIcon />}
-            onClick={() => setShowCreatePerson(true)}
-            data-testid="add-person-button">
+          <HeaderPrimaryButton startIcon={<PersonAddIcon />} onClick={() => setShowCreatePerson(true)} data-testid="add-person-button">
             {Locale.label("people.peoplePage.addPerson")}
-          </Button>
+          </HeaderPrimaryButton>
         )}
       </PageHeader>
 

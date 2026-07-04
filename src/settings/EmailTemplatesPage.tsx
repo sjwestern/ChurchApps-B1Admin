@@ -4,6 +4,7 @@ import { Email as EmailIcon, Edit as EditIcon, Delete as DeleteIcon, Add as AddI
 import { ApiHelper, Loading, PageHeader, UserHelper, Locale } from "@churchapps/apphelper";
 import { EmailTemplateEdit } from "./components/EmailTemplateEdit";
 import { AppIconButton } from "../components/ui/AppIconButton";
+import { HeaderPrimaryButton } from "../components/ui";
 
 export interface EmailTemplateInterface {
   id?: string;
@@ -63,9 +64,9 @@ export const EmailTemplatesPage: React.FC = () => {
   return (
     <>
       <PageHeader title={Locale.label("settings.emailTemplatesPage.title")} subtitle={Locale.label("settings.emailTemplatesPage.subtitle")}>
-        <Button variant="contained" startIcon={<AddIcon />} onClick={handleNew} sx={{ color: "#FFF", backgroundColor: "rgba(255,255,255,0.2)", borderColor: "#FFF", "&:hover": { backgroundColor: "rgba(255,255,255,0.3)" } }}>
+        <HeaderPrimaryButton startIcon={<AddIcon />} onClick={handleNew}>
           {Locale.label("settings.emailTemplatesPage.newTemplate")}
-        </Button>
+        </HeaderPrimaryButton>
       </PageHeader>
 
       <Box sx={{ p: 2 }}>

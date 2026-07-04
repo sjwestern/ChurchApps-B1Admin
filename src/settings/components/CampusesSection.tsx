@@ -67,11 +67,11 @@ export const CampusesSection: React.FC = () => {
           </Stack>
           {rows.length > 0 ? (
             <Table>
-              <TableHead sx={{ backgroundColor: "var(--bg-sub)" }}>
+              <TableHead>
                 <TableRow>
-                  <TableCell sx={{ fontWeight: 600 }}>{Locale.label("settings.campusEdit.name")}</TableCell>
-                  <TableCell sx={{ fontWeight: 600 }}>{Locale.label("settings.campuses.location")}</TableCell>
-                  <TableCell sx={{ fontWeight: 600 }}>{Locale.label("settings.campusEdit.timezone")}</TableCell>
+                  <TableCell>{Locale.label("settings.campusEdit.name")}</TableCell>
+                  <TableCell>{Locale.label("settings.campuses.location")}</TableCell>
+                  <TableCell>{Locale.label("settings.campusEdit.timezone")}</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>{rows}</TableBody>

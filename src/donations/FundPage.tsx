@@ -139,13 +139,10 @@ export const FundPage = () => {
             </Stack>
           </TableCell>
           {personCol}
-          <TableCell>
-            <Stack direction="row" spacing={1} alignItems="center">
-              {/* <MoneyIcon sx={{ color: "success.main", fontSize: 18 }} /> */}
-              <Typography variant="body2" sx={{ fontWeight: 600, color: "success.main" }}>
-                {CurrencyHelper.formatCurrencyWithLocale(fd.amount, currency)}
-              </Typography>
-            </Stack>
+          <TableCell align="right">
+            <Typography variant="body2" sx={{ fontWeight: 600, color: "success.main" }}>
+              {CurrencyHelper.formatCurrencyWithLocale(fd.amount, currency)}
+            </Typography>
           </TableCell>
         </TableRow>
       );
@@ -162,26 +159,10 @@ export const FundPage = () => {
 
     rows.push(
       <TableRow key="header">
-        <TableCell sx={{ fontWeight: 600 }}>
-          <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
-            {Locale.label("donations.fundsPage.date")}
-          </Typography>
-        </TableCell>
-        <TableCell sx={{ fontWeight: 600 }}>
-          <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
-            {Locale.label("donations.fundsPage.batch")}
-          </Typography>
-        </TableCell>
-        <TableCell sx={{ fontWeight: 600 }}>
-          <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
-            {Locale.label("donations.fundsPage.donor")}
-          </Typography>
-        </TableCell>
-        <TableCell sx={{ fontWeight: 600 }}>
-          <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
-            {Locale.label("donations.fundsPage.amt")}
-          </Typography>
-        </TableCell>
+        <TableCell>{Locale.label("donations.fundsPage.date")}</TableCell>
+        <TableCell>{Locale.label("donations.fundsPage.batch")}</TableCell>
+        <TableCell>{Locale.label("donations.fundsPage.donor")}</TableCell>
+        <TableCell align="right">{Locale.label("donations.fundsPage.amt")}</TableCell>
       </TableRow>
     );
     return rows;
@@ -199,16 +180,7 @@ export const FundPage = () => {
     if (!fundDonations) return <Loading />;
     return (
       <Table sx={{ minWidth: 650 }}>
-        <TableHead
-          sx={{
-            backgroundColor: "grey.50",
-            "& .MuiTableCell-root": {
-              borderBottom: "2px solid",
-              borderBottomColor: "divider"
-            }
-          }}>
-          {getTableHeader()}
-        </TableHead>
+        <TableHead>{getTableHeader()}</TableHead>
         <TableBody>{getRows()}</TableBody>
       </Table>
     );

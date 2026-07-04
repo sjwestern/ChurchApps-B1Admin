@@ -25,12 +25,13 @@ interface Props {
   group: GroupInterface;
   onEdit?: () => void;
   editMode?: boolean;
+  tabs?: ReactNode;
 }
 
 const headerChipSx = { backgroundColor: "rgba(255,255,255,0.2)", color: "#fff", fontWeight: 600, fontSize: "0.8125rem" };
 
 export const GroupBanner = memo((props: Props) => {
-  const { group, onEdit } = props;
+  const { group, onEdit, tabs } = props;
   const navigate = useNavigate();
   const [groupServiceTimes, setGroupServiceTimes] = React.useState<GroupServiceTimeInterface[]>([]);
   const [showTextDialog, setShowTextDialog] = React.useState(false);
@@ -173,7 +174,7 @@ export const GroupBanner = memo((props: Props) => {
   const subtitle = isStandard && group.about ? group.about.replace(/[#*_`]/g, "") : undefined;
 
   return (
-    <PageHeader avatar={avatar} title={group.name || ""} subtitle={subtitle} chips={chips} statistics={statistics}>
+    <PageHeader avatar={avatar} title={group.name || ""} subtitle={subtitle} chips={chips} statistics={statistics} tabs={tabs}>
       <AppIconButton label={Locale.label("groups.groupBanner.emailTooltip")} icon={<EmailIcon />} tone="header" onClick={() => setShowEmailDialog(true)} />
       {canSendNotifications && (
         <AppIconButton label="Send push notification" icon={<NotificationsActiveIcon />} tone="header" onClick={() => setShowNotificationDialog(true)} />

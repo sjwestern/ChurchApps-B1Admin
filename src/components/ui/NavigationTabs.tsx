@@ -24,11 +24,14 @@ interface Props {
   tabs: NavigationTab[];
   dropdown?: NavigationDropdown;
   testId?: string;
+  // Renders transparent, left-aligned, white-on-blue for use inside the gradient page header
+  onHeader?: boolean;
 }
 
 // Shared with SmartTabs so every page/local tab bar renders identically.
 export const navigationTabsSx = {
   minHeight: 48,
+  "& .MuiTabs-flexContainer": { paddingLeft: "16px" },
   "& .MuiTab-root": {
     minHeight: 48,
     textTransform: "none",
@@ -37,8 +40,27 @@ export const navigationTabsSx = {
   }
 };
 
+const headerTabsSx = {
+  minHeight: 44,
+  "& .MuiTabs-flexContainer": { paddingLeft: "16px" },
+  "& .MuiTab-root": {
+    minHeight: 44,
+    textTransform: "none",
+    fontSize: "13px",
+    fontWeight: 600,
+    color: "rgba(255,255,255,.66)",
+    "& .MuiSvgIcon-root": { color: "inherit" },
+    "&:hover": { color: "rgba(255,255,255,.9)" },
+    "&.Mui-selected": { color: "#fff" }
+  },
+  "& .MuiTabs-indicator": {
+    backgroundColor: "#fff",
+    height: "2.5px"
+  }
+};
+
 export const NavigationTabs = memo((props: Props) => {
-  const { selectedTab, onTabChange, tabs, dropdown, testId } = props;
+  const { selectedTab, onTabChange, tabs, dropdown, testId, onHeader } = props;
   const [dropdownAnchor, setDropdownAnchor] = useState<null | HTMLElement>(null);
   const theme = useTheme();
 
@@ -60,13 +82,19 @@ export const NavigationTabs = memo((props: Props) => {
     if (newValue !== dropdown?.value) onTabChange(newValue);
   };
 
+  const containerStyle: React.CSSProperties = onHeader
+    ? { backgroundColor: "transparent" }
+    : { backgroundColor: theme.palette.background.paper, borderBottom: `1px solid ${theme.palette.divider}` };
+
   return (
-    <div style={{ backgroundColor: theme.palette.background.paper, borderBottom: `1px solid ${theme.palette.divider}` }}>
+    <div style={containerStyle}>
       <Tabs
         value={selectedTab}
         onChange={handleTabChange}
-        variant="fullWidth"
-        sx={navigationTabsSx}
+        variant="scrollable"
+        scrollButtons="auto"
+        allowScrollButtonsMobile
+        sx={onHeader ? headerTabsSx : navigationTabsSx}
         data-testid={testId}>
         {tabs.map((tab) => (
           <Tab

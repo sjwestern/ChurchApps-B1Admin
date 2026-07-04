@@ -87,7 +87,7 @@ export const WebhooksSection: React.FC = () => {
               <TableRow>
                 <TableCell>{Locale.label("settings.webhooksPage.name")}</TableCell>
                 <TableCell>{Locale.label("settings.webhooksPage.url")}</TableCell>
-                <TableCell>{Locale.label("settings.webhooksPage.events")}</TableCell>
+                <TableCell align="right">{Locale.label("settings.webhooksPage.events")}</TableCell>
                 <TableCell>{Locale.label("settings.webhooksPage.status")}</TableCell>
                 <TableCell align="right"></TableCell>
               </TableRow>
@@ -97,7 +97,7 @@ export const WebhooksSection: React.FC = () => {
                 <TableRow key={w.id} hover sx={{ cursor: "pointer" }} onClick={() => setEditWebhook(w)}>
                   <TableCell><Typography fontWeight={600}>{w.name}</Typography></TableCell>
                   <TableCell><Typography variant="body2" sx={{ maxWidth: 280, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{w.url}</Typography></TableCell>
-                  <TableCell>{w.events?.length || 0}</TableCell>
+                  <TableCell align="right">{w.events?.length || 0}</TableCell>
                   <TableCell><Chip size="small" color={w.active ? "success" : "default"} label={w.active ? Locale.label("settings.webhooksPage.active") : Locale.label("settings.webhooksPage.disabled")} /></TableCell>
                   <TableCell align="right" className="rowActions">
                     <Stack direction="row" spacing={0.5} justifyContent="flex-end">

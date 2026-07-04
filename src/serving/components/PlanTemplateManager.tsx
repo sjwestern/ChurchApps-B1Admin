@@ -45,7 +45,7 @@ export const PlanTemplateManager: React.FC<Props> = ({ ministryId, plans, onClos
             <Paper variant="outlined" sx={{ mt: 1 }}>
               <Table size="small">
                 <TableHead>
-                  <TableRow sx={{ backgroundColor: "background.subtle" }}>
+                  <TableRow>
                     <TableCell sx={{ fontWeight: 600 }}>{Locale.label("common.name")}</TableCell>
                     <TableCell align="right" sx={{ width: 170 }}></TableCell>
                   </TableRow>
@@ -54,7 +54,7 @@ export const PlanTemplateManager: React.FC<Props> = ({ ministryId, plans, onClos
                   {templates.map((t) => (
                     <TableRow key={t.id} hover sx={{ "&:last-child td": { border: 0 } }}>
                       <TableCell>{t.name}</TableCell>
-                      <TableCell align="right">
+                      <TableCell align="right" className="rowActions">
                         <AppIconButton label={Locale.label("common.edit")} icon={<EditIcon />} onClick={() => setRenameItem(t)} />
                         <AppIconButton label={Locale.label("plans.templates.updateFromPlan") || "Update from plan"} icon={<SyncIcon />} onClick={() => setUpdateItem(t)} />
                         <AppIconButton label={Locale.label("plans.templates.apply") || "Apply"} icon={<ApplyIcon />} onClick={() => setApplyItem(t)} />

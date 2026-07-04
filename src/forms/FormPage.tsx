@@ -3,8 +3,9 @@ import { Tabs, FormNavigation, FormEdit } from "./components";
 import { type FormInterface, type MemberPermissionInterface } from "@churchapps/helpers";
 import { UserHelper, Permissions, Locale, Loading, PageHeader } from "@churchapps/apphelper";
 import { useParams, useNavigate } from "react-router-dom";
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import { Description as DescriptionIcon, Edit as EditIcon } from "@mui/icons-material";
+import { HeaderPrimaryButton } from "../components/ui";
 
 import { useQuery } from "@tanstack/react-query";
 
@@ -67,26 +68,17 @@ export const FormPage = () => {
 
   return form.data?.id ? (
     <>
-      <PageHeader title={form.data.name} subtitle={Locale.label("forms.formPage.subtitleConfig")} icon={<DescriptionIcon />}>
+      <PageHeader
+        title={form.data.name}
+        subtitle={Locale.label("forms.formPage.subtitleConfig")}
+        icon={<DescriptionIcon />}
+        tabs={<FormNavigation selectedTab={selectedTab} onTabChange={setSelectedTab} form={form.data} memberPermission={memberPermission.data} onHeader />}>
         {canEditSettings && (
-          <Button
-            variant="outlined"
-            startIcon={<EditIcon />}
-            onClick={() => setEditingSettings(true)}
-            data-testid="edit-form-settings-button"
-            sx={{
-              color: "#FFF",
-              borderColor: "rgba(255,255,255,0.5)",
-              "&:hover": {
-                borderColor: "#FFF",
-                backgroundColor: "rgba(255,255,255,0.1)"
-              }
-            }}>
+          <HeaderPrimaryButton startIcon={<EditIcon />} onClick={() => setEditingSettings(true)} data-testid="edit-form-settings-button">
             {Locale.label("forms.formEdit.editForm")}
-          </Button>
+          </HeaderPrimaryButton>
         )}
       </PageHeader>
-      <FormNavigation selectedTab={selectedTab} onTabChange={setSelectedTab} form={form.data} memberPermission={memberPermission.data} />
 
       <Box sx={{ p: 3 }}>
         {editingSettings ? (

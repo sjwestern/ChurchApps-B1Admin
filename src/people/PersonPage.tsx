@@ -158,11 +158,7 @@ export const PersonPage = () => {
       <PersonBanner
         person={person}
         togglePhotoEditor={setInPhotoEditMode}
-      />
-      <PersonNavigation
-        selectedTab={selectedTab}
-        onTabChange={setSelectedTab}
-        showForms={showForms}
+        tabs={<PersonNavigation selectedTab={selectedTab} onTabChange={setSelectedTab} showForms={showForms} onHeader />}
       />
       <div style={{ padding: "24px" }}>
         {getCurrentTab()}
