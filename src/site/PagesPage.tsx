@@ -8,7 +8,6 @@ import {
   Description as DescriptionIcon,
   Edit as EditIcon,
   ExpandMore as ExpandMoreIcon,
-  AutoAwesome as AutoAwesomeIcon,
   AutoAwesomeMosaic as AutoAwesomeMosaicIcon,
   Public as PublicIcon,
   Transform as TransformIcon,
@@ -293,6 +292,7 @@ export const PagesPage = () => {
           sx={{ color: "#FFF", borderColor: "rgba(255,255,255,0.5)", "&:hover": { borderColor: "#FFF", backgroundColor: "rgba(255,255,255,0.1)" } }}>
           {Locale.label("site.pagesPage.startFromTemplate")}
         </Button>
+        {/* ponytail: AI website builder temporarily disabled — restore this button to re-enable
         <Button
           variant="outlined"
           startIcon={<AutoAwesomeIcon />}
@@ -303,6 +303,7 @@ export const PagesPage = () => {
           sx={{ color: "#FFF", borderColor: "rgba(255,255,255,0.5)", "&:hover": { borderColor: "#FFF", backgroundColor: "rgba(255,255,255,0.1)" } }}>
           {Locale.label("site.generateSite.button")}
         </Button>
+        */}
         <Button
           variant="outlined"
           startIcon={<AddIcon />}
