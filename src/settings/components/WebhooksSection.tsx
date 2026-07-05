@@ -1,10 +1,12 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { Box, Table, TableHead, TableRow, TableCell, TableBody, TableContainer, Stack, Button, Typography, Chip, Card } from "@mui/material";
-import { Webhook as WebhookIcon, Edit as EditIcon, Delete as DeleteIcon, Add as AddIcon } from "@mui/icons-material";
-import { ApiHelper, Loading, Locale } from "@churchapps/apphelper";
+import React, { useState } from "react";
+import { Table, TableHead, TableRow, TableCell, TableBody, TableContainer, Stack, Typography, Chip } from "@mui/material";
+import { Webhook as WebhookIcon, Edit as EditIcon, Delete as DeleteIcon } from "@mui/icons-material";
+import { ApiHelper, Locale } from "@churchapps/apphelper";
+import { useQuery } from "@tanstack/react-query";
 import { WebhookEdit } from "./WebhookEdit";
-import { CountChip } from "../../components/ui";
+import { SectionListCard } from "../../components/ui";
 import { AppIconButton } from "../../components/ui/AppIconButton";
+import { useConfirmDelete } from "../../hooks";
 
 export interface WebhookInterface {
   id?: string;
@@ -37,50 +39,38 @@ export interface WebhookDeliveryInterface {
 const blankWebhook = (): WebhookInterface => ({ name: "", url: "", events: [], active: true, connectorType: "standard" });
 
 export const WebhooksSection: React.FC = () => {
-  const [webhooks, setWebhooks] = useState<WebhookInterface[]>([]);
   const [editWebhook, setEditWebhook] = useState<WebhookInterface | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  const loadData = useCallback(() => {
-    setLoading(true);
-    ApiHelper.get("/webhooks", "MembershipApi")
-      .then((data: WebhookInterface[]) => setWebhooks(data || []))
-      .finally(() => setLoading(false));
-  }, []);
-
-  useEffect(() => { loadData(); }, [loadData]);
+  const webhooksQuery = useQuery<WebhookInterface[]>({ queryKey: ["/webhooks", "MembershipApi"], placeholderData: [] });
+  const webhooks = webhooksQuery.data || [];
+  const { confirm, ConfirmDialogElement } = useConfirmDelete();
 
   const handleDelete = async (webhook: WebhookInterface) => {
-    if (!window.confirm(Locale.label("settings.webhooksPage.deleteConfirm").replace("{name}", webhook.name || ""))) return;
+    if (!(await confirm(Locale.label("settings.webhooksPage.deleteConfirm").replace("{name}", webhook.name || "")))) return;
     await ApiHelper.delete("/webhooks/" + webhook.id, "MembershipApi");
-    loadData();
+    webhooksQuery.refetch();
   };
 
-  const handleSaved = () => { setEditWebhook(null); loadData(); };
+  const handleSaved = () => { setEditWebhook(null); webhooksQuery.refetch(); };
 
   if (editWebhook !== null) {
     return <WebhookEdit webhook={editWebhook} onSave={handleSaved} onCancel={() => setEditWebhook(null)} onDelete={editWebhook.id ? () => { handleDelete(editWebhook); setEditWebhook(null); } : undefined} />;
   }
 
   return (
-    <Card>
-      <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ p: 2, borderBottom: 1, borderColor: "var(--border-light)" }}>
-        <Stack direction="row" spacing={1} alignItems="center">
-          <WebhookIcon sx={{ color: "primary.main", fontSize: 20 }} />
-          <Typography variant="h6">{Locale.label("settings.webhooksPage.title")}</Typography>
-          {webhooks.length > 0 && <CountChip count={webhooks.length} />}
-        </Stack>
-        <Button variant="contained" startIcon={<AddIcon />} onClick={() => setEditWebhook(blankWebhook())}>
-          {Locale.label("settings.webhooksPage.newWebhook")}
-        </Button>
-      </Stack>
-      {loading ? <Loading /> : webhooks.length === 0 ? (
-        <Box sx={{ textAlign: "center", py: 6, px: 2 }}>
-          <WebhookIcon sx={{ fontSize: 48, color: "text.secondary", mb: 1 }} />
-          <Typography variant="subtitle1" color="text.secondary">{Locale.label("settings.webhooksPage.emptyTitle")}</Typography>
-          <Typography variant="body2" color="text.secondary">{Locale.label("settings.webhooksPage.emptyDescription")}</Typography>
-        </Box>
-      ) : (
+    <>
+      {ConfirmDialogElement}
+      <SectionListCard
+        icon={<WebhookIcon />}
+        title={Locale.label("settings.webhooksPage.title")}
+        count={webhooks.length}
+        onAdd={() => setEditWebhook(blankWebhook())}
+        addLabel={Locale.label("settings.webhooksPage.newWebhook")}
+        loading={webhooksQuery.isLoading}
+        empty={{
+          icon: <WebhookIcon />,
+          title: Locale.label("settings.webhooksPage.emptyTitle"),
+          description: Locale.label("settings.webhooksPage.emptyDescription")
+        }}>
         <TableContainer>
           <Table size="small">
             <TableHead>
@@ -110,7 +100,7 @@ export const WebhooksSection: React.FC = () => {
             </TableBody>
           </Table>
         </TableContainer>
-      )}
-    </Card>
+      </SectionListCard>
+    </>
   );
 };

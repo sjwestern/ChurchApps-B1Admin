@@ -15,12 +15,12 @@ import {
 import { Delete as DeleteIcon, CalendarMonth as CalendarIcon, Groups as GroupsIcon, Add as AddIcon, Print as PrintIcon, UploadFile as ImportIcon } from "@mui/icons-material";
 import { ApiHelper, UserHelper, Loading, PageHeader, Locale, Permissions } from "@churchapps/apphelper";
 import { type CuratedCalendarInterface, type GroupInterface, type CuratedEventInterface } from "@churchapps/helpers";
-import { PermissionDenied } from "../components";
+import { useConfirmDelete, useRequirePermission } from "../hooks";
 import { CuratedCalendar } from "./components/CuratedCalendar";
 import { NewEventModal } from "./components/NewEventModal";
 import { ImportIcsModal } from "./components/ImportIcsModal";
 import { AppIconButton } from "../components/ui/AppIconButton";
-import { CountChip } from "../components/ui";
+import { CountChip, EmptyState } from "../components/ui";
 import { HeaderPrimaryButton, HeaderSecondaryButton } from "../components/ui/headerButtons";
 
 const printStyles = `@media print {
@@ -39,6 +39,8 @@ export const CalendarPage = () => {
   const [refresh, refresher] = useState({});
   const [showNewEvent, setShowNewEvent] = useState(false);
   const [showImport, setShowImport] = useState(false);
+  const { confirm, ConfirmDialogElement } = useConfirmDelete();
+  const denied = useRequirePermission(Permissions.contentApi.content.edit);
 
   const curatedCalendarId = params.id;
 
@@ -60,8 +62,8 @@ export const CalendarPage = () => {
     });
   };
 
-  const handleGroupDelete = (groupId: string) => {
-    if (confirm(Locale.label("calendars.calendarPage.confirmRemoveGroup"))) {
+  const handleGroupDelete = async (groupId: string) => {
+    if (await confirm(Locale.label("calendars.calendarPage.confirmRemoveGroup"))) {
       ApiHelper.delete("/curatedEvents/calendar/" + curatedCalendarId + "/group/" + groupId, "ContentApi").then(() => {
         loadData();
         refresher({});
@@ -76,10 +78,11 @@ export const CalendarPage = () => {
   }, [curatedCalendarId]);
 
   if (!curatedCalendarId) return null;
-  if (!UserHelper.checkAccess(Permissions.contentApi.content.edit)) return <PermissionDenied permissions={[Permissions.contentApi.content.edit]} />;
+  if (denied) return denied;
 
   return (
     <>
+      {ConfirmDialogElement}
       <style>{printStyles}</style>
       <PageHeader
         icon={<CalendarIcon />}
@@ -152,14 +155,13 @@ export const CalendarPage = () => {
                     <Loading data-testid="groups-loading" />
                   </Box>
                 ) : addedGroups.length === 0 ? (
-                  <Box sx={{ p: 3, textAlign: "center" }}>
-                    <GroupsIcon sx={{ fontSize: 48, color: "grey.400", mb: 1 }} />
-                    <Typography variant="body2" color="text.secondary">
-                      {Locale.label("calendars.calendarPage.noGroupsAdded")}
-                    </Typography>
-                    <Typography variant="caption" color="text.secondary">
-                      {Locale.label("calendars.calendarPage.addEventsHint")}
-                    </Typography>
+                  <Box sx={{ p: 2 }}>
+                    <EmptyState
+                      variant="card"
+                      icon={<GroupsIcon />}
+                      title={Locale.label("calendars.calendarPage.noGroupsAdded")}
+                      description={Locale.label("calendars.calendarPage.addEventsHint")}
+                    />
                   </Box>
                 ) : (
                   <Table size="small">
