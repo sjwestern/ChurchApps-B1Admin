@@ -72,7 +72,7 @@ test.describe.serial("Registrations Commerce — settings panels, paid roster, w
     await page.locator('[data-testid="save-calendar-button"]').click();
     const row = page.locator("table tbody tr").filter({ hasText: CALENDAR }).first();
     await expect(row).toBeVisible({ timeout: 15000 });
-    await row.click();
+    await row.locator("a").first().click();
     await page.waitForURL(/\/calendars\/[\w-]+/, { timeout: 10000 });
 
     await page.locator('[data-testid="new-event-button"]').click();

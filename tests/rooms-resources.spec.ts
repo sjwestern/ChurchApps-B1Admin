@@ -151,7 +151,7 @@ test.describe.serial("Rooms, resources & approvals", () => {
     await page.locator('[data-testid="save-calendar-button"]').click();
     const row = page.locator("table tbody tr").filter({ hasText: CALENDAR }).first();
     await expect(row).toBeVisible({ timeout: 15000 });
-    await row.click();
+    await row.locator("a").first().click();
     await page.waitForURL(/\/calendars\/[\w-]+/, { timeout: 10000 });
 
     await page.locator('[data-testid="new-event-button"]').click();
@@ -231,7 +231,7 @@ test.describe.serial("Rooms, resources & approvals", () => {
   test("imports events from a pasted .ics calendar", async () => {
     await navigateToCalendars(page);
     const row = page.locator("table tbody tr").filter({ hasText: CALENDAR }).first();
-    await row.click();
+    await row.locator("a").first().click();
     await page.waitForURL(/\/calendars\/[\w-]+/, { timeout: 10000 });
     await page.locator('[data-testid="import-ics-button"]').click();
     await selectOption(page, "import-ics-group-select", APPROVAL_GROUP);

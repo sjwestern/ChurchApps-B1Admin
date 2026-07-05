@@ -190,6 +190,7 @@ test.describe("Person form submissions (profile rail)", () => {
   test("a seeded submission renders its stored answers", async ({ page }) => {
     await navigateToPeople(page);
     await openPersonRow(page, "Brian Harris");
+    await page.getByRole("tab", { name: "Forms" }).click();
     const railItem = page.getByText("Visitor Information Card", { exact: true }).first();
     await expect(railItem).toBeVisible({ timeout: 10000 });
     await railItem.click();
@@ -201,6 +202,7 @@ test.describe("Person form submissions (profile rail)", () => {
   test("submitting a person form stores and re-renders the answers", async ({ page }) => {
     await navigateToPeople(page);
     await openPersonRow(page, SEED_PEOPLE.DONALD);
+    await page.getByRole("tab", { name: "Forms" }).click();
     const railItem = page.getByText("Visitor Information Card", { exact: true }).first();
     await expect(railItem).toBeVisible({ timeout: 10000 });
     await railItem.click();

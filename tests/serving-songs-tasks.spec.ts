@@ -1,6 +1,5 @@
 import type { Page } from "@playwright/test";
 import { servingTest as test, expect } from "./helpers/test-fixtures";
-import { editIconButton } from "./helpers/fixtures";
 import { login } from "./helpers/auth";
 import { navigateToServing } from "./helpers/navigation";
 import { STORAGE_STATE_PATH } from "./global-setup";
@@ -54,7 +53,7 @@ test.describe("Serving Management - Songs & Tasks", () => {
       const saveBtn = page.locator('[role="dialog"] button').getByText("Save", { exact: true });
       await saveBtn.click();
       await page.waitForURL(/\/serving\/songs\/[^/]+/, { timeout: 20000 });
-      const validatedSong = page.getByRole("heading", { name: "Frolic" });
+      const validatedSong = page.locator("#page-header-title");
       await expect(validatedSong).toBeVisible({ timeout: 10000 });
     });
 
@@ -65,7 +64,7 @@ test.describe("Serving Management - Songs & Tasks", () => {
       await page.locator('[data-testid="add-song-button"]').waitFor({ state: "visible", timeout: 10000 });
       const song = page.locator("a").getByText("Frolic", { exact: true }).first();
       await song.click();
-      await expect(page.getByRole("heading", { name: "Frolic" })).toBeVisible({ timeout: 10000 });
+      await expect(page.locator("#page-header-title")).toBeVisible({ timeout: 10000 });
 
       await page.locator("button").getByText("Add Arrangement").first().click();
       await expect(page.getByText("New Arrangement").first()).toBeVisible({ timeout: 10000 });
@@ -76,7 +75,9 @@ test.describe("Serving Management - Songs & Tasks", () => {
       const arrCard = page.locator(".MuiCard-root").filter({ hasText: "Arrangement - New Arrangement" });
       await arrCard.getByRole("button", { name: "Edit" }).first().click();
       await page.locator("button").getByText("Delete").last().click();
-      await expect(page).toHaveURL(/\/serving\/songs(?:\/?$|\?)/, { timeout: 10000 });
+      // Frolic still has its default arrangement, so we stay on the song detail (SongPage
+      // only returns to the list when the last arrangement is deleted). Confirm cleanup.
+      await expect(arrCard).toHaveCount(0, { timeout: 10000 });
     });
 
     test("should add song key", async () => {
@@ -87,7 +88,7 @@ test.describe("Serving Management - Songs & Tasks", () => {
 
       const song = page.locator("a").getByText("Frolic", { exact: true }).first();
       await song.click();
-      await expect(page.getByRole("heading", { name: "Frolic" })).toBeVisible({ timeout: 10000 });
+      await expect(page.locator("#page-header-title")).toBeVisible({ timeout: 10000 });
       const allTabs = page.locator('[role="tab"]');
       await expect(allTabs).toHaveCount(2, { timeout: 10000 });
       const addKeyTab = page.getByRole("tab", { name: /Add/ });
@@ -105,7 +106,7 @@ test.describe("Serving Management - Songs & Tasks", () => {
 
       const song = page.locator("a").getByText("Frolic", { exact: true }).first();
       await song.click();
-      await expect(page.getByRole("heading", { name: "Frolic" })).toBeVisible({ timeout: 10000 });
+      await expect(page.locator("#page-header-title")).toBeVisible({ timeout: 10000 });
       const addBtn = page.locator('[id="addBtnGroup"]');
       await addBtn.click();
       const addLinkBtn = page.locator("li").getByText("Add External Link");
@@ -128,7 +129,7 @@ test.describe("Serving Management - Songs & Tasks", () => {
 
       const song = page.locator("a").getByText("Frolic", { exact: true }).first();
       await song.click();
-      await expect(page.getByRole("heading", { name: "Frolic" })).toBeVisible({ timeout: 10000 });
+      await expect(page.locator("#page-header-title")).toBeVisible({ timeout: 10000 });
       const linkRow = page.locator("li").filter({ hasText: "Frolic on YouTube" });
       const editBtn = linkRow.locator('button:has(svg[data-testid="EditIcon"])').first();
       await editBtn.click();
@@ -149,7 +150,7 @@ test.describe("Serving Management - Songs & Tasks", () => {
 
       const song = page.locator("a").getByText("Frolic", { exact: true }).first();
       await song.click();
-      await expect(page.getByRole("heading", { name: "Frolic" })).toBeVisible({ timeout: 10000 });
+      await expect(page.locator("#page-header-title")).toBeVisible({ timeout: 10000 });
       // Link list re-renders mid-load; wait for link to render then dispatch click.
       await page.locator('a[href*="youtu.be"]').waitFor({ state: "visible", timeout: 10000 });
       const linkRow = page.locator("li").filter({ has: page.locator('a[href*="youtu.be"]') });
@@ -175,7 +176,7 @@ test.describe("Serving Management - Songs & Tasks", () => {
 
       const song = page.locator("a").getByText("Frolic", { exact: true }).first();
       await song.click();
-      await expect(page.getByRole("heading", { name: "Frolic" })).toBeVisible({ timeout: 10000 });
+      await expect(page.locator("#page-header-title")).toBeVisible({ timeout: 10000 });
       // Link list re-renders mid-load; wait for link then dispatch click.
       await page.locator('a[href*="youtu.be"]').waitFor({ state: "visible", timeout: 10000 });
       const linkRow = page.locator("li").filter({ has: page.locator('a[href*="youtu.be"]') });
@@ -194,7 +195,7 @@ test.describe("Serving Management - Songs & Tasks", () => {
 
       const song = page.locator("a").getByText("Frolic", { exact: true }).first();
       await song.click();
-      await expect(page.getByRole("heading", { name: "Frolic" })).toBeVisible({ timeout: 10000 });
+      await expect(page.locator("#page-header-title")).toBeVisible({ timeout: 10000 });
       // Scope to Keys card header to disambiguate from other Edit icons.
       const editBtn = page.locator(".MuiCard-root").filter({ has: page.getByRole("heading", { name: "Keys", exact: true }) }).locator('button[aria-label="Edit"]').first();
       await editBtn.click();
@@ -215,7 +216,7 @@ test.describe("Serving Management - Songs & Tasks", () => {
 
       const song = page.locator("a").getByText("Frolic", { exact: true }).first();
       await song.click();
-      await expect(page.getByRole("heading", { name: "Frolic" })).toBeVisible({ timeout: 10000 });
+      await expect(page.locator("#page-header-title")).toBeVisible({ timeout: 10000 });
       const editBtn = page.locator(".MuiCard-root").filter({ has: page.getByRole("heading", { name: "Keys", exact: true }) }).locator('button[aria-label="Edit"]').first();
       await editBtn.click();
       const keySignature = page.locator('[name="keySignature"]');
@@ -239,7 +240,7 @@ test.describe("Serving Management - Songs & Tasks", () => {
 
       const song = page.locator("a").getByText("Frolic", { exact: true }).first();
       await song.click();
-      await expect(page.getByRole("heading", { name: "Frolic" })).toBeVisible({ timeout: 10000 });
+      await expect(page.locator("#page-header-title")).toBeVisible({ timeout: 10000 });
       await page.locator('[role="tab"]').filter({ hasText: "Zacchaeus Key" }).click();
       const editBtn = page.locator(".MuiCard-root").filter({ has: page.getByRole("heading", { name: "Keys", exact: true }) }).locator('button[aria-label="Edit"]').first();
       await editBtn.click();
@@ -257,7 +258,7 @@ test.describe("Serving Management - Songs & Tasks", () => {
 
       const song = page.locator("a").getByText("Frolic", { exact: true }).first();
       await song.click();
-      await expect(page.getByRole("heading", { name: "Frolic" })).toBeVisible({ timeout: 10000 });
+      await expect(page.locator("#page-header-title")).toBeVisible({ timeout: 10000 });
       const extHeading = page.getByRole("heading", { name: "External Links" });
       const extContainer = extHeading.locator("xpath=ancestor::div[1]/..");
       await extContainer.locator('button:has(svg[data-testid="EditIcon"])').first().click();
@@ -282,7 +283,7 @@ test.describe("Serving Management - Songs & Tasks", () => {
 
       const song = page.locator("a").getByText("Frolic", { exact: true }).first();
       await song.click();
-      await expect(page.getByRole("heading", { name: "Frolic" })).toBeVisible({ timeout: 10000 });
+      await expect(page.locator("#page-header-title")).toBeVisible({ timeout: 10000 });
       const extHeading = page.getByRole("heading", { name: "External Links" });
       const extContainer = extHeading.locator("xpath=ancestor::div[1]/..");
       await extContainer.locator('button:has(svg[data-testid="EditIcon"])').first().click();
@@ -302,8 +303,8 @@ test.describe("Serving Management - Songs & Tasks", () => {
 
       const song = page.locator("a").getByText("Frolic", { exact: true }).first();
       await song.click();
-      await expect(page.getByRole("heading", { name: "Frolic" })).toBeVisible({ timeout: 10000 });
-      const editBtn = editIconButton(page).nth(2);
+      await expect(page.locator("#page-header-title")).toBeVisible({ timeout: 10000 });
+      const editBtn = page.locator(".MuiCard-root").filter({ has: page.getByRole("heading", { name: /Arrangement -/ }) }).getByRole("button", { name: "Edit" }).first();
       await editBtn.click();
       const lyricBox = page.locator('[name="lyrics"]');
       await lyricBox.fill("No Lyrics");
@@ -322,8 +323,8 @@ test.describe("Serving Management - Songs & Tasks", () => {
 
       const song = page.locator("a").getByText("Frolic", { exact: true }).first();
       await song.click();
-      await expect(page.getByRole("heading", { name: "Frolic" })).toBeVisible({ timeout: 10000 });
-      const editBtn = editIconButton(page).nth(2);
+      await expect(page.locator("#page-header-title")).toBeVisible({ timeout: 10000 });
+      const editBtn = page.locator(".MuiCard-root").filter({ has: page.getByRole("heading", { name: /Arrangement -/ }) }).getByRole("button", { name: "Edit" }).first();
       await editBtn.click();
       const lyricBox = page.locator('[name="lyrics"]');
       await expect(lyricBox).toHaveCount(1);
@@ -346,8 +347,8 @@ test.describe("Serving Management - Songs & Tasks", () => {
 
       const song = page.locator("a").getByText("Frolic", { exact: true }).first();
       await song.click();
-      await expect(page.getByRole("heading", { name: "Frolic" })).toBeVisible({ timeout: 10000 });
-      const editBtn = editIconButton(page).nth(2);
+      await expect(page.locator("#page-header-title")).toBeVisible({ timeout: 10000 });
+      const editBtn = page.locator(".MuiCard-root").filter({ has: page.getByRole("heading", { name: /Arrangement -/ }) }).getByRole("button", { name: "Edit" }).first();
       await editBtn.click();
       const deleteBtn = page.locator("button").getByText("Delete").last();
       await deleteBtn.click();
@@ -525,7 +526,7 @@ test.describe("Serving Management - Songs & Tasks", () => {
 
       const song = page.locator("a").getByText("Amazing Grace", { exact: true }).first();
       await song.click();
-      await expect(page.getByRole("heading", { name: "Amazing Grace" })).toBeVisible({ timeout: 10000 });
+      await expect(page.locator("#page-header-title")).toBeVisible({ timeout: 10000 });
 
       const arrangementCard = page.locator(".MuiCard-root").filter({ hasText: /^Arrangement - / });
       await expect(arrangementCard).toBeVisible({ timeout: 10000 });

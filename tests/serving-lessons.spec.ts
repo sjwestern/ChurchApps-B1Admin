@@ -6,6 +6,7 @@ import { navigateToServing } from "./helpers/navigation";
 import { STORAGE_STATE_PATH } from "./global-setup";
 
 // "Apollos" names are private to this spec; retries would create duplicate tabs.
+test.describe.serial("Serving Management - Lessons", () => {
   test.describe.configure({ retries: 0 });
   let page: Page;
 

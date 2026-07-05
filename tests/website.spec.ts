@@ -79,8 +79,9 @@ test.describe("Website Management", () => {
       await name.fill("Zebedee Test Page");
       const saveBtn = page.locator("button").getByText("Save");
       await saveBtn.click();
+      // Redesign: the "Previewing: …" banner is now a paragraph, so only the page-card h6 carries the title.
       const validatedPage = page.locator("h6").getByText("Zebedee Test Page");
-      await expect(validatedPage).toHaveCount(2);
+      await expect(validatedPage).toHaveCount(1);
     });
 
     test("should cancel editing page title", async () => {
@@ -777,7 +778,7 @@ test.describe("Website Management", () => {
       // Demo data seeds a solid-nav linkColor override (see globalStyles in demo.sql), so
       // the field starts enabled rather than disabled — just ensure the toggle is on
       // (check() is a no-op if already checked) instead of assuming a disabled start state.
-      await linkToggle.check();
+      if (!(await linkToggle.isChecked())) await linkToggle.check({ force: true });
       await expect(linkInput).toBeEnabled();
       // `fill` does not work on type=color; use React's native setter.
       await linkInput.evaluate((el: HTMLInputElement) => {
@@ -887,7 +888,7 @@ test.describe("Website Management", () => {
       await name.fill("Zacchaeus Test Calendar");
       const saveBtn = page.locator('[data-testid="save-calendar-button"]');
       await saveBtn.click();
-      const validatedCalendar = page.locator("h6").getByText("Zacchaeus Test Calendar");
+      const validatedCalendar = page.getByRole("link", { name: "Zacchaeus Test Calendar" });
       await expect(validatedCalendar).toHaveCount(1);
     });
 
@@ -945,7 +946,7 @@ test.describe("Website Management", () => {
       await name.fill("Zebedee Test Calendar");
       const saveBtn = page.locator('[data-testid="save-calendar-button"]');
       await saveBtn.click();
-      const validatedChange = page.locator("h6").getByText("Zebedee Test Calendar");
+      const validatedChange = page.getByRole("link", { name: "Zebedee Test Calendar" });
       await expect(validatedChange).toHaveCount(1);
     });
 

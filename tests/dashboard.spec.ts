@@ -4,8 +4,8 @@ import { loggedInTest as test, expect } from "./helpers/test-fixtures";
 test.describe("Dashboard Management", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("/dashboard");
-    // Wait for the main page header to confirm dashboard rendered (welcome greeting).
-    await expect(page.locator("h1, h2, h3").getByText(/Welcome to/).first()).toBeVisible({ timeout: 15000 });
+    // Wait for the dashboard to render (welcome greeting — now a paragraph, not a heading).
+    await expect(page.getByText(/Welcome to/).first()).toBeVisible({ timeout: 15000 });
     // Wait for the People search card to render — it's the first thing in the main column.
     await expect(page.locator("#searchText")).toBeVisible({ timeout: 15000 });
   });

@@ -87,7 +87,7 @@ test.describe.serial("Serving Reminders", () => {
   test("admin enables a reminder on a plan type, picks a timing chip, and saves", async () => {
     await page.goto("/serving/plans");
     await page.waitForURL(/\/serving\/plans/, { timeout: 15000 });
-    await expect(page.getByRole("heading", { name: "Worship", exact: true })).toBeVisible({ timeout: 15000 });
+    await expect(page.getByRole("tab", { name: "Worship" })).toBeVisible({ timeout: 15000 });
 
     await openPlanTypeEditor(page);
     await expandReminders(page);
