@@ -152,8 +152,7 @@ export const GivingSettingsEdit: React.FC<Props> = (props) => {
       <Grid size={{ xs: 12, md: 4 }}>
         <Typography variant="body2" color="textSecondary" component="div" sx={{ mb: 1 }}>
           {Locale.label("settings.givingSettingsEdit.currencyHelper")}
-          {/* The currency reference link is Stripe-specific; only show it for Stripe. */}
-          {provider === "stripe" && <> <a href="https://dashboard.stripe.com/settings/currencies" target="_blank" rel="noopener noreferrer">{Locale.label("settings.givingSettingsEdit.stripeDashboard")}</a></>}
+          {descriptor?.currencyHelpUrl && <> <a href={descriptor.currencyHelpUrl} target="_blank" rel="noopener noreferrer">{Locale.label("settings.givingSettingsEdit.stripeDashboard")}</a></>}
         </Typography>
         <Controller
           control={control}
